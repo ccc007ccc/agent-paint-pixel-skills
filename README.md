@@ -20,7 +20,7 @@
   <a href="docs/skill-compatibility.md">Skill Compatibility</a>
 </p>
 
-The slime above is a `16x16` APXA animation rendered at the exact source size, then point-upscaled to a black-backed `512x512` GIF only for README display. AgentPaint keeps artwork dimensions exact; previews are separate inspection assets.
+The slime above is a transparent `16x16` APXA animation rendered at the exact source size, then point-upscaled to `512x512` only for README display. AgentPaint keeps artwork dimensions exact; previews are separate inspection assets.
 
 ## What It Is
 

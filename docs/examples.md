@@ -4,7 +4,7 @@ The `examples/` directory contains APX source examples generated in separate Cod
 
 PNG previews, GIF previews, and patched/reordered APX outputs are generated artifacts and are ignored by git by default. Two README showcase assets are intentionally tracked:
 
-- `examples/red-slime-jump-16-highres.gif`: black-backed nearest-neighbor `512x512` display version of the exact-size `16x16` slime animation.
+- `examples/red-slime-jump-16-highres.gif`: transparent-background nearest-neighbor `512x512` display version of the exact-size `16x16` slime animation.
 - `examples/examples-showcase-zh.png`: overview image for the generated examples.
 
 ## Example Matrix
@@ -64,6 +64,6 @@ Create the README display GIF from the exact-size render:
 
 ```bash
 ffmpeg -y -i examples/red-slime-jump-16.gif \
-  -vf "scale=512:512:flags=neighbor,format=rgba,geq=r='if(eq(alpha(X,Y),0),0,r(X,Y))':g='if(eq(alpha(X,Y),0),0,g(X,Y))':b='if(eq(alpha(X,Y),0),0,b(X,Y))':a='255'" \
+  -filter_complex "[0:v]scale=512:512:flags=neighbor,split[s0][s1];[s0]palettegen=reserve_transparent=1:transparency_color=000000[p];[s1][p]paletteuse=alpha_threshold=128" \
   -loop 0 examples/red-slime-jump-16-highres.gif
 ```
