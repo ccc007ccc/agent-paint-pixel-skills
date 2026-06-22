@@ -49,16 +49,16 @@ rows:
 README 顶部的史莱姆动图来自：
 
 ```text
-examples/red-slime-jump-32.apxa
+examples/red-slime-jump-16.apxa
 ```
 
-真实动画尺寸是 `32x32`。README 使用的文件是：
+真实动画尺寸是 `16x16`。README 使用的文件是：
 
 ```text
-examples/red-slime-jump-32-highres.gif
+examples/red-slime-jump-16-highres.gif
 ```
 
-它是用最近邻方式点对点放大到 `512x512` 的展示图，只用于网页展示，不代表源作品被放大或改尺寸。
+它是黑底、最近邻方式点对点放大到 `512x512` 的展示图，只用于网页展示，不代表源作品被放大或改尺寸。
 
 ## 快速安装
 

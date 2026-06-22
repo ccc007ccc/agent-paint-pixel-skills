@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="examples/red-slime-jump-32-highres.gif" width="128" height="128" alt="AgentPaint red slime jump animation">
+  <img src="examples/red-slime-jump-16-highres.gif" width="128" height="128" alt="AgentPaint red slime jump animation">
 </p>
 
 <h1 align="center">AgentPaint</h1>
@@ -20,7 +20,7 @@
   <a href="docs/skill-compatibility.md">Skill Compatibility</a>
 </p>
 
-The slime above is a `32x32` APXA animation rendered at the exact source size, then point-upscaled to `512x512` only for README display. AgentPaint keeps artwork dimensions exact; previews are separate inspection assets.
+The slime above is a `16x16` APXA animation rendered at the exact source size, then point-upscaled to a black-backed `512x512` GIF only for README display. AgentPaint keeps artwork dimensions exact; previews are separate inspection assets.
 
 ## What It Is
 
