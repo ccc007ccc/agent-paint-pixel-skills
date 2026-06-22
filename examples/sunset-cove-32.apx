@@ -1,0 +1,164 @@
+{
+  "canvas": { "width": 32, "height": 32 },
+  "palette": {
+    ".": "transparent",
+    "K": "#151721",
+    "A": "#496fbd",
+    "B": "#7fa7d8",
+    "C": "#eaa66b",
+    "D": "#ffd46a",
+    "E": "#fff0c8",
+    "F": "#6d6f90",
+    "G": "#414d62",
+    "H": "#f3eed7",
+    "I": "#244939",
+    "J": "#5f8c58",
+    "L": "#275d78",
+    "M": "#4c96aa",
+    "N": "#a9ddd2",
+    "O": "#b98254",
+    "P": "#4e6d3f",
+    "Q": "#61564d",
+    "R": "#e7cd63"
+  },
+  "layers": [
+    {
+      "name": "birds_and_sparkles",
+      "chunks": [
+        { "x": 5, "y": 7, "rows": [ "K.K", ".K." ] },
+        { "x": 24, "y": 6, "rows": [ "K.K", ".K." ] },
+        { "x": 13, "y": 20, "rows": [ "N..N....N", ".N..N.N.." ] }
+      ]
+    },
+    {
+      "name": "foreground_texture",
+      "chunks": [
+        { "x": 1, "y": 27, "rows": [ "P..J..P....Q", ".JJ.P..Q.P..", "P..R.J...P.Q", "QQQ..P..JJ.." ] },
+        { "x": 21, "y": 26, "rows": [ "..Q.P.J..", "Q..JJ..P.", ".P.R..Q..", "JJ..P..QQ", ".QQQ....." ] },
+        { "x": 16, "y": 28, "rows": [ "O..Q", ".OO.", "Q..O" ] }
+      ]
+    },
+    {
+      "name": "water_ripples",
+      "chunks": [
+        { "x": 0, "y": 20, "rows": [ "NNN....NN....NNN....NN....NN.", "..MNN....MNN....MNN....MNN...", "L....NN....L....NN....L....N.", "...M....NN....M....NN....M..." ] },
+        { "x": 10, "y": 24, "rows": [ "NNNNN...NNNN", "...MNNNN....", "LL....NNN..." ] }
+      ]
+    },
+    {
+      "name": "sun_clouds",
+      "chunks": [
+        {
+          "x": 13,
+          "y": 7,
+          "rows": [
+            ".DDDD.",
+            "DDDDDD",
+            "DDDDDD",
+            ".DDDD."
+          ]
+        },
+        { "x": 3, "y": 10, "rows": [ "..EEEE...", ".EECCEE..", "EEE..EEE." ] },
+        { "x": 22, "y": 11, "rows": [ ".EEE..", "EECCEE", "..EEE." ] }
+      ]
+    },
+    {
+      "name": "mountain_snow_and_trees",
+      "chunks": [
+        { "x": 8, "y": 13, "rows": [ "..H.", ".HHH", "H..H" ] },
+        { "x": 19, "y": 14, "rows": [ ".H..", "HHH.", "H..H" ] },
+        { "x": 0, "y": 17, "rows": [ "I.J.I.J.I.J.I.J.I.J.I.J.I.J.I.J.", ".I.I.J.I.I.J.I.I.J.I.I.J.I.I.J.." ] }
+      ]
+    },
+    {
+      "name": "foreground_base",
+      "chunks": [
+        {
+          "x": 0,
+          "y": 26,
+          "rows": [
+            "PPPPOOOOOOOOOOOOOPPPPPPPPPPPPPP",
+            "PPPOOOOOOOOOOOOOOOOPPPPPPPPPPPP",
+            "PPOOOOOOOOOOOOOOOOOOOPPPPPPPPPP",
+            "OOOOOOOOOOOOOOOOOOOOOOOPPPPPPPP",
+            "OOOOOOOOOOOOOOOOOOOOOOOOPPPPPPP",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "water_base",
+      "chunks": [
+        {
+          "x": 0,
+          "y": 19,
+          "rows": [
+            "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
+            "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+            "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
+            "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+            "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
+            "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+            "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mountain_base",
+      "chunks": [
+        {
+          "x": 0,
+          "y": 12,
+          "rows": [
+            "...........F....................",
+            "..........FFF...........G.......",
+            ".........FFFFF.........GGG......",
+            "........FFFFFFF.......GGGGG.....",
+            ".......FFFFFFFFF.....GGGGGGG....",
+            "......FFFFFFFFFFF...GGGGGGGGG...",
+            "FFFFGGGGGGGGGGGGGGGGGGGGGGGGGGGG"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sky_base",
+      "rows": [
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+        "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+      ]
+    }
+  ]
+}

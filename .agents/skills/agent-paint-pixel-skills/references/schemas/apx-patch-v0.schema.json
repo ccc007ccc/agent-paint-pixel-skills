@@ -12,6 +12,8 @@
       "items": {
         "oneOf": [
           { "$ref": "#/$defs/set_palette" },
+          { "$ref": "#/$defs/set_background" },
+          { "$ref": "#/$defs/clear_background" },
           { "$ref": "#/$defs/add_layer" },
           { "$ref": "#/$defs/insert_layer" },
           { "$ref": "#/$defs/replace_layer" },
@@ -77,8 +79,30 @@
       "required": ["op", "symbol", "color"],
       "properties": {
         "op": { "const": "set_palette" },
-        "symbol": { "type": "string", "minLength": 1, "maxLength": 1 },
+        "symbol": {
+          "allOf": [
+            { "type": "string", "minLength": 1, "maxLength": 1 },
+            { "not": { "const": "_" } }
+          ]
+        },
         "color": { "$ref": "#/$defs/color" }
+      }
+    },
+    "set_background": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "color"],
+      "properties": {
+        "op": { "const": "set_background" },
+        "color": { "$ref": "#/$defs/color" }
+      }
+    },
+    "clear_background": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op"],
+      "properties": {
+        "op": { "const": "clear_background" }
       }
     },
     "add_layer": {

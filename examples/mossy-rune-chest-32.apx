@@ -1,0 +1,175 @@
+{
+  "canvas": { "width": 32, "height": 32 },
+  "palette": {
+    ".": "transparent",
+    "K": "#1a1320",
+    "S": "#2a2430",
+    "D": "#3a211d",
+    "W": "#6e3d27",
+    "L": "#a86134",
+    "M": "#4f673d",
+    "G": "#7da85b",
+    "Y": "#cfa94f",
+    "H": "#ffe18a",
+    "C": "#38c8b8",
+    "E": "#b8fff0"
+  },
+  "layers": [
+    {
+      "name": "rune_marks",
+      "chunks": [
+        {
+          "x": 13,
+          "y": 14,
+          "rows": [
+            "C..C..",
+            ".CC...",
+            "..C...",
+            ".C.C..",
+            "C...C.",
+            ".CCC.."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "rune_glow",
+      "opacity": 0.65,
+      "chunks": [
+        {
+          "x": 12,
+          "y": 13,
+          "rows": [
+            "..EEEE..",
+            ".ECCCCE.",
+            "ECCCCCCE",
+            "ECCEECCE",
+            "ECCCCCCE",
+            ".ECCCCE.",
+            "..EEEE.."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "moss_and_gold_highlights",
+      "chunks": [
+        { "x": 8, "y": 10, "rows": [ "GG..M...GG", ".M......G.", "..GG.M...." ] },
+        { "x": 19, "y": 11, "rows": [ "M.GG", "GG.M", ".G.." ] },
+        {
+          "x": 7,
+          "y": 13,
+          "rows": [
+            "HH..............HH",
+            "..H............H..",
+            "....HH......HH...."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "wood_grain",
+      "chunks": [
+        {
+          "x": 8,
+          "y": 16,
+          "rows": [
+            "L..W...L..W...L.",
+            ".D..L.....D..L..",
+            "...W..D..W......",
+            "L....W....L..D..",
+            "..D.....L....W..",
+            ".L..W..D....L...",
+            "...D....W..D....",
+            "L....L.....W..D."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "metal_trim",
+      "chunks": [
+        {
+          "x": 6,
+          "y": 13,
+          "rows": [
+            "YYYYYYYYYYYYYYYYYYYY",
+            "Y..................Y",
+            "Y..HH..........HH..Y",
+            "Y..................Y",
+            "YYYYYYYYYYYYYYYYYYYY"
+          ]
+        },
+        { "x": 14, "y": 22, "rows": [ "YYYY", "YHHY", "YYYY" ] }
+      ]
+    },
+    {
+      "name": "wood_fill",
+      "chunks": [
+        {
+          "x": 6,
+          "y": 11,
+          "rows": [
+            "..LLLLLLLLLLLLLLLL..",
+            ".LWWWWWWWWWWWWWWWWL.",
+            "LWWWWWWWWWWWWWWWWWWL",
+            "WDDDDDDDDDDDDDDDDDDW",
+            "WLLLLLLLLLLLLLLLLLLW",
+            "WWWWWWWWWWWWWWWWWWWW",
+            "WDDDDDDDDDDDDDDDDDDW",
+            "WLLLLLLLLLLLLLLLLLLW",
+            "WWWWWWWWWWWWWWWWWWWW",
+            "WDDDDDDDDDDDDDDDDDDW",
+            "WLLLLLLLLLLLLLLLLLLW",
+            "WWWWWWWWWWWWWWWWWWWW",
+            "WDDDDDDDDDDDDDDDDDDW",
+            ".WLLLLLLLLLLLLLLLLW.",
+            "..WWWWWWWWWWWWWWWW.."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "broken_outline",
+      "chunks": [
+        {
+          "x": 4,
+          "y": 9,
+          "rows": [
+            "......KKKKKKKKKK......",
+            "....KKKKKKKKKKKKKK....",
+            "..KKKKKKKKKKKKKKKKKK..",
+            ".KKKKKKKKKKKKKKKKKKKK.",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKK",
+            ".KKKKKKKKKKKKKKKKKKKK.",
+            "..KKKKKKKKKKKKKKKKKK.."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "drop_shadow",
+      "chunks": [
+        {
+          "x": 5,
+          "y": 27,
+          "rows": [
+            "..SSSSSSSSSSSSSSSS..",
+            ".SSSSSSSSSSSSSSSSSS.",
+            "..SSSSSSSSSSSSSSSS.."
+          ]
+        }
+      ]
+    }
+  ]
+}

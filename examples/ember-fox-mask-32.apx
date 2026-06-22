@@ -1,0 +1,137 @@
+{
+  "canvas": { "width": 32, "height": 32 },
+  "palette": {
+    ".": "transparent",
+    "K": "#171018",
+    "S": "#332533",
+    "R": "#8e2f2f",
+    "O": "#d85a2f",
+    "Y": "#ffc857",
+    "W": "#f2d8b6",
+    "B": "#6f4a52",
+    "H": "#fff1c4"
+  },
+  "layers": [
+    {
+      "name": "ember_flecks",
+      "chunks": [
+        { "x": 7, "y": 5, "rows": [ "Y.", ".O" ] },
+        { "x": 23, "y": 7, "rows": [ ".Y", "O." ] },
+        { "x": 5, "y": 24, "rows": [ "O" ] },
+        { "x": 26, "y": 23, "rows": [ "Y" ] }
+      ]
+    },
+    {
+      "name": "face_marks",
+      "chunks": [
+        {
+          "x": 10,
+          "y": 10,
+          "rows": [
+            "..R......R..",
+            ".RRR....RRR.",
+            "R.O.R..R.O.R",
+            "..R......R..",
+            "....RRRR....",
+            "...R.YY.R...",
+            "..R..YY..R.."
+          ]
+        },
+        {
+          "x": 13,
+          "y": 20,
+          "rows": [
+            "R....R",
+            ".R..R.",
+            "..RR.."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "eye_cutouts",
+      "chunks": [
+        { "x": 9, "y": 14, "rows": [ "KKKK", "KYYK", "KKK." ] },
+        { "x": 19, "y": 14, "rows": [ "KKKK", "KYYK", ".KKK" ] }
+      ]
+    },
+    {
+      "name": "warm_highlights",
+      "chunks": [
+        {
+          "x": 8,
+          "y": 9,
+          "rows": [
+            "..HH........HH..",
+            ".H............H.",
+            "H..............H",
+            "....H......H....",
+            "...H........H..."
+          ]
+        },
+        { "x": 14, "y": 6, "rows": [ ".Y..", "YYYY", ".YY." ] }
+      ]
+    },
+    {
+      "name": "mask_base",
+      "chunks": [
+        {
+          "x": 7,
+          "y": 7,
+          "rows": [
+            "..WWWWWWWWWWWWWW..",
+            ".WOOOOOOOOOOOOOOW.",
+            "WOOOOOOOOOOOOOOOOW",
+            "WOOOOWWWWWWOOOOWOW",
+            "WOOOWWWWWWWWWWOOOW",
+            "WOOOWWWWWWWWWWOOOW",
+            "WOOOOWWWWWWWWOOOOW",
+            ".WOOOWWWWWWWOOOW..",
+            "..WOOOWWWWWOOOW...",
+            "...WOOOWWWWOOOW...",
+            "....WOOOWWOOOW....",
+            ".....WOOOOOOW.....",
+            "......WWWWWW......",
+            ".......WWWW.......",
+            "........WW........"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ear_and_mask_outline",
+      "chunks": [
+        {
+          "x": 5,
+          "y": 4,
+          "rows": [
+            "K.....K............K.....K",
+            "KK...KK............KK...KK",
+            "KKK.KKK............KKK.KKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKK",
+            ".KKKKKKKKKKKKKKKKKKKKKKKK.",
+            "..KKKKKKKKKKKKKKKKKKKKKK..",
+            "..KKKKKKKKKKKKKKKKKKKKKK..",
+            ".KKKKKKKKKKKKKKKKKKKKKKKK.",
+            ".KKKKKKKKKKKKKKKKKKKKKKKK.",
+            "..KKKKKKKKKKKKKKKKKKKKKK..",
+            "...KKKKKKKKKKKKKKKKKKKK...",
+            "....KKKKKKKKKKKKKKKKKK....",
+            ".....KKKKKKKKKKKKKKKK.....",
+            "......KKKKKKKKKKKKKK......",
+            ".......KKKKKKKKKKKK.......",
+            "........KKKKKKKKKK........",
+            ".........KKKKKKKK.........",
+            "..........KKKKKK.........."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "soft_shadow",
+      "chunks": [
+        { "x": 9, "y": 27, "rows": [ ".SSSSSSSSSSSS.", "SSSSSSSSSSSSSS", ".SSSSSSSSSSSS." ] }
+      ]
+    }
+  ]
+}

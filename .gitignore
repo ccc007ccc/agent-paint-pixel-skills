@@ -1,9 +1,14 @@
 target/
 
 examples/*.png
+examples/*.gif
+!examples/examples-showcase-zh.png
+!examples/red-slime-jump-32-highres.gif
+examples/*.psd
 examples/*-patched.apx
 examples/*-reordered.apx
 *.rgba.json
+*.psd
 
 .vite/
 node_modules/

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Paint Pixel Skills"
+  short_description: "Generate style-aware APX pixel art"
+  default_prompt: "Use $agent-paint-pixel-skills to generate exact-size layered APX pixel art and validate it."

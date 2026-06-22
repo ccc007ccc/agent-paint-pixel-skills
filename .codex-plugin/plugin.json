@@ -1,0 +1,33 @@
+{
+  "name": "agent-paint-pixel-skills",
+  "version": "0.1.0",
+  "description": "AgentPaint CLI and reusable APX/APXA pixel-art generation skill.",
+  "author": {
+    "name": "ccc007ccc"
+  },
+  "repository": "https://github.com/ccc007ccc/agent-paint-pixel-skills",
+  "keywords": [
+    "agent-skills",
+    "pixel-art",
+    "apx",
+    "agentpaint",
+    "codex",
+    "cli"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Paint Pixel Skills",
+    "shortDescription": "Generate exact-size layered APX pixel art",
+    "longDescription": "Use the installed agentpaint CLI to author, validate, render, animate, inspect, export PSD, and export RGBA for APX/APXA pixel-art projects.",
+    "developerName": "ccc007ccc",
+    "category": "Creative",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use Agent Paint Pixel Skills to generate a 32x32 APX sprite and render it.",
+      "Use Agent Paint Pixel Skills to validate, supersample, and export a layered APX file."
+    ]
+  }
+}

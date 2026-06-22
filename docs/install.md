@@ -1,19 +1,19 @@
-# Install AgentPaint CLI And Skill
+# Install AgentPaint CLI And Skills
 
-This guide installs:
+Chinese guide: [install.zh-CN.md](install.zh-CN.md).
 
-- `agentpaint`, the Rust CLI, into Cargo's binary directory.
-- `agent-paint-pixel-skills`, the Codex skill, into the user's global skills directory.
+This project ships two installable parts:
 
-After installation, any CLI agent can call `agentpaint` from `PATH`, and Codex can use the skill from any repository.
+- `agentpaint`, the Rust CLI installed into Cargo's binary directory.
+- `agent-paint-pixel-skills`, a standard `SKILL.md` agent skill for APX/APXA pixel art.
 
-Runtime use does not require the AgentPaint source repository. The repository is only needed to install or update the CLI and skill from source.
+Normal skill use does not require the AgentPaint source repository. Agents should call `agentpaint` from `PATH` and read the installed skill folder.
 
 ## Prerequisites
 
-- Rust and Cargo installed.
-- Codex CLI installed if you want Codex to use the skill.
-- The AgentPaint repository available locally, only when installing from a local clone.
+- Rust and Cargo.
+- One or more CLI/IDE agents that support `SKILL.md`, rules, or plugin installs.
+- This repository, only when installing from source.
 
 Verify Rust:
 
@@ -22,45 +22,24 @@ cargo --version
 rustc --version
 ```
 
-## Ask A CLI AI To Install It
+## Quick Install
 
-From inside the AgentPaint repository, give Codex or another CLI coding agent this prompt:
-
-```text
-Install this AgentPaint project for local use:
-1. Install the Rust CLI with `cargo install --path . --locked`.
-2. Ensure Cargo's bin directory is on PATH.
-3. Copy `.agents/skills/agent-paint-pixel-skills` into my global Codex skills directory at `$HOME/.agents/skills/agent-paint-pixel-skills`.
-4. Verify `agentpaint --help` and that the skill folder contains `SKILL.md`.
-5. Do not delete or overwrite unrelated files.
-```
-
-If the agent is running on Windows PowerShell, it should use the PowerShell commands below.
-
-## Install The CLI
-
-Run from the AgentPaint repository root:
-
-```bash
-cargo install --path . --locked
-```
-
-Or use the bundled installer:
+From the repository root:
 
 ```bash
 sh ./scripts/install.sh --update-path
 ```
 
-On Windows PowerShell:
+Windows PowerShell:
 
 ```powershell
 .\scripts\install.ps1 -UpdatePath
 ```
 
-The binary is installed to Cargo's bin directory:
+Default behavior:
 
-- Windows: `%USERPROFILE%\.cargo\bin`
-- macOS/Linux: `$HOME/.cargo/bin`
+- Installs `agentpaint` with `cargo install --path . --locked --force`.
+- Installs the skill to the universal/Codex path: `$HOME/.agents/skills/agent-paint-pixel-skills`.
 
 Verify:
 
@@ -68,128 +47,160 @@ Verify:
 agentpaint --help
 ```
 
-If `agentpaint` is not found, add Cargo's bin directory to `PATH`.
+## Install Skills For Other CLIs
 
-### Windows PowerShell PATH
-
-For the current terminal session:
-
-```powershell
-$env:Path = "$env:USERPROFILE\.cargo\bin;$env:Path"
-agentpaint --help
-```
-
-Persist for future terminals:
-
-```powershell
-$cargoBin = "$env:USERPROFILE\.cargo\bin"
-$userPath = [Environment]::GetEnvironmentVariable("Path", "User")
-if (($userPath -split ';') -notcontains $cargoBin) {
-  [Environment]::SetEnvironmentVariable("Path", "$cargoBin;$userPath", "User")
-}
-```
-
-Open a new terminal after changing the persistent PATH.
-
-### macOS/Linux PATH
-
-For the current terminal session:
-
-```bash
-export PATH="$HOME/.cargo/bin:$PATH"
-agentpaint --help
-```
-
-Persist for future shells by adding this line to your shell profile:
-
-```bash
-export PATH="$HOME/.cargo/bin:$PATH"
-```
-
-## Install The Codex Skill
-
-AgentPaint includes an installable skill source at:
+The skill source lives at:
 
 ```text
 .agents/skills/agent-paint-pixel-skills
 ```
 
-To make it available globally to Codex, copy it to:
+Install only the skill, without reinstalling the CLI:
+
+```bash
+sh ./scripts/install.sh --skip-cli --skill-target claude-code
+sh ./scripts/install.sh --skip-cli --skill-target gemini
+sh ./scripts/install.sh --skip-cli --skill-target cursor --project
+```
+
+Windows PowerShell:
+
+```powershell
+.\scripts\install.ps1 -SkipCli -SkillTargets claude-code
+.\scripts\install.ps1 -SkipCli -SkillTargets gemini
+.\scripts\install.ps1 -SkipCli -SkillTargets cursor -ProjectSkills
+```
+
+Install to every supported target:
+
+```bash
+sh ./scripts/install.sh --skip-cli --all-skill-targets
+```
+
+Windows PowerShell:
+
+```powershell
+.\scripts\install.ps1 -SkipCli -AllSkillTargets
+```
+
+Supported targets:
 
 ```text
-$HOME/.agents/skills/agent-paint-pixel-skills
+universal, codex, claude-code, copilot, gemini, kiro, cline,
+roo-code, kilo-code, factory, goose, opencode, antigravity,
+cursor, windsurf, trae, junie, all
 ```
 
-### Windows PowerShell
+`codex` is an alias for `universal`.
 
-Run from the AgentPaint repository root:
+## Target Paths
+
+User-level native `SKILL.md` installs:
+
+| Target | Path |
+| --- | --- |
+| `universal` / `codex` | `$HOME/.agents/skills/agent-paint-pixel-skills` |
+| `claude-code` | `$HOME/.claude/skills/agent-paint-pixel-skills` |
+| `copilot` | `$HOME/.copilot/skills/agent-paint-pixel-skills` |
+| `gemini` | `$HOME/.gemini/skills/agent-paint-pixel-skills` |
+| `kiro` | `$HOME/.kiro/skills/agent-paint-pixel-skills` |
+| `cline` | `$HOME/.cline/skills/agent-paint-pixel-skills` |
+| `roo-code` | `$HOME/.roo/skills/agent-paint-pixel-skills` |
+| `kilo-code` | `$HOME/.kilocode/skills/agent-paint-pixel-skills` |
+| `factory` | `$HOME/.factory/skills/agent-paint-pixel-skills` |
+| `goose` | `$HOME/.config/goose/skills/agent-paint-pixel-skills` |
+| `opencode` | `$HOME/.config/opencode/skills/agent-paint-pixel-skills` |
+| `antigravity` | `$HOME/.gemini/antigravity/skills/agent-paint-pixel-skills` |
+
+Rule-adapter installs:
+
+| Target | Output |
+| --- | --- |
+| `cursor` | `.cursor/rules/agent-paint-pixel-skills.mdc` or `$HOME/.cursor/rules/agent-paint-pixel-skills.mdc` |
+| `windsurf` | `.windsurf/rules/agent-paint-pixel-skills.md` or `$HOME/.codeium/windsurf/skills/agent-paint-pixel-skills.md` |
+| `trae` | `.trae/rules/agent-paint-pixel-skills.md` or `$HOME/.trae/rules/agent-paint-pixel-skills.md` |
+| `junie` | `.junie/skills/agent-paint-pixel-skills/guidelines.md` or `$HOME/.junie/skills/agent-paint-pixel-skills/guidelines.md` |
+
+For rule-adapter targets, the installer also installs a universal standard skill copy unless `--no-universal-companion` is used on `scripts/install-skills.sh` or `-NoUniversalCompanion` is used on `scripts/install-skills.ps1`.
+
+## Project-Level Install
+
+Use project-level install when a tool only reads repository rules, or when the skill should travel with a repo:
+
+```bash
+sh ./scripts/install.sh --skip-cli --project-skills --skill-target cursor
+sh ./scripts/install.sh --skip-cli --project-skills --skill-target windsurf
+sh ./scripts/install.sh --skip-cli --project-skills --skill-target universal
+```
+
+Windows PowerShell:
 
 ```powershell
-$source = Join-Path (Get-Location) ".agents\skills\agent-paint-pixel-skills"
-$targetRoot = Join-Path $HOME ".agents\skills"
-$target = Join-Path $targetRoot "agent-paint-pixel-skills"
-
-New-Item -ItemType Directory -Force -Path $targetRoot | Out-Null
-if (Test-Path -LiteralPath $target) {
-  Remove-Item -LiteralPath $target -Recurse -Force
-}
-Copy-Item -LiteralPath $source -Destination $target -Recurse -Force
+.\scripts\install.ps1 -SkipCli -ProjectSkills -SkillTargets cursor
+.\scripts\install.ps1 -SkipCli -ProjectSkills -SkillTargets windsurf
+.\scripts\install.ps1 -SkipCli -ProjectSkills -SkillTargets universal
 ```
 
-### macOS/Linux
-
-Run from the AgentPaint repository root:
+To install into another repository:
 
 ```bash
-mkdir -p "$HOME/.agents/skills"
-rm -rf "$HOME/.agents/skills/agent-paint-pixel-skills"
-cp -R ".agents/skills/agent-paint-pixel-skills" "$HOME/.agents/skills/agent-paint-pixel-skills"
+sh ./scripts/install.sh --skip-cli --project-skills --project-path /path/to/repo --skill-target universal
 ```
 
-Restart Codex after installing or updating a global skill if it does not appear immediately.
-
-The bundled install scripts copy this skill automatically unless `--skip-skill` or `-SkipSkill` is used.
-
-Verify the skill files:
-
-```bash
-ls "$HOME/.agents/skills/agent-paint-pixel-skills"
-```
-
-On Windows PowerShell:
+Windows PowerShell:
 
 ```powershell
-Get-ChildItem -LiteralPath "$HOME\.agents\skills\agent-paint-pixel-skills"
+.\scripts\install.ps1 -SkipCli -ProjectSkills -ProjectPath C:\path\to\repo -SkillTargets universal
 ```
 
-## Verify End To End
+## Plugin Distribution
 
-From any directory:
+The repository includes plugin manifests for installers that understand plugin marketplaces:
 
-```bash
-agentpaint --help
+```text
+.codex-plugin/plugin.json
+.claude-plugin/plugin.json
+.claude-plugin/marketplace.json
+skills/agent-paint-pixel-skills/SKILL.md
 ```
 
-Expected result:
+Codex plugins use `.codex-plugin/plugin.json` and the root `skills/` directory. Claude Code plugin marketplaces use `.claude-plugin/marketplace.json` and `.claude-plugin/plugin.json`.
 
-- `agentpaint --help` prints the available commands.
-- The global skill folder contains `SKILL.md`.
+The runtime skill still requires `agentpaint` on `PATH`; plugin install handles the skill, not the Rust binary.
 
-After examples are regenerated, also verify `validate`, `inspect`, `render`, `export-rgba`, and `patch` against one APX file.
+## Ask A CLI AI To Install It
 
-When Codex uses `$agent-paint-pixel-skills`, it should create APX files in the user's current workspace and run `agentpaint validate`, `agentpaint render`, and `agentpaint patch`. It should not search for the AgentPaint source repository unless the user is explicitly developing or reinstalling AgentPaint itself.
+From inside the AgentPaint repository, give any CLI coding agent this prompt:
 
-For generation requests, the APX canvas must match the requested size exactly. The skill should not satisfy a requested size by drawing a smaller image and resizing it, and it should not write helper scripts to draw the art unless the user explicitly asks for programmatic generation.
+```text
+Install AgentPaint for local use:
+1. Run the bundled installer for my platform.
+2. Ensure Cargo's bin directory is on PATH.
+3. Install agent-paint-pixel-skills for my CLI target.
+4. Verify `agentpaint --help`.
+5. Verify the installed skill folder or rule file exists.
+6. Do not delete unrelated files.
+```
+
+For all supported skill targets:
+
+```text
+Install only the AgentPaint skill to every supported CLI target using the bundled installer. Do not reinstall the Rust CLI.
+```
 
 ## Update
 
-After pulling or editing AgentPaint:
+After pulling changes:
 
 ```bash
-cargo install --path . --locked --force
+sh ./scripts/install.sh --update-path --all-skill-targets
 ```
 
-Then reinstall the skill by repeating the copy commands above, or by running the bundled install script again.
+Windows PowerShell:
+
+```powershell
+.\scripts\install.ps1 -UpdatePath -AllSkillTargets
+```
 
 ## Uninstall
 
@@ -199,14 +210,4 @@ Remove the CLI:
 cargo uninstall agentpaint
 ```
 
-Remove the global Codex skill:
-
-```bash
-rm -rf "$HOME/.agents/skills/agent-paint-pixel-skills"
-```
-
-On Windows PowerShell:
-
-```powershell
-Remove-Item -LiteralPath "$HOME\.agents\skills\agent-paint-pixel-skills" -Recurse -Force
-```
+Then remove installed skill copies from whichever target paths you used.

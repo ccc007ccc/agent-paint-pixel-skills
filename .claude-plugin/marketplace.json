@@ -1,0 +1,31 @@
+{
+  "name": "agent-paint-pixel-skills",
+  "owner": {
+    "name": "ccc007ccc"
+  },
+  "metadata": {
+    "description": "AgentPaint APX/APXA pixel-art CLI skill",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "agent-paint-pixel-skills",
+      "source": "./",
+      "description": "Generate, edit, validate, render, animate, inspect, and export exact-size layered APX/APXA pixel art using the installed agentpaint CLI.",
+      "version": "0.1.0",
+      "author": {
+        "name": "ccc007ccc"
+      },
+      "keywords": [
+        "pixel-art",
+        "agent-skills",
+        "agentpaint",
+        "apx"
+      ],
+      "strict": false,
+      "skills": [
+        "./skills/agent-paint-pixel-skills"
+      ]
+    }
+  ]
+}

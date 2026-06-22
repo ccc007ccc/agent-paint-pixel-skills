@@ -1,0 +1,20 @@
+{
+  "name": "agent-paint-pixel-skills",
+  "description": "AgentPaint CLI and reusable APX/APXA pixel-art generation skill.",
+  "version": "0.1.0",
+  "author": {
+    "name": "ccc007ccc"
+  },
+  "repository": "https://github.com/ccc007ccc/agent-paint-pixel-skills",
+  "keywords": [
+    "agent-skills",
+    "pixel-art",
+    "apx",
+    "agentpaint",
+    "claude-code",
+    "cli"
+  ],
+  "skills": [
+    "./skills/agent-paint-pixel-skills"
+  ]
+}

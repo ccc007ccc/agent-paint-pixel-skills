@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentpaint.local/schemas/apxa-v0.schema.json",
+  "title": "AgentPaint APXA Animation v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["canvas", "palette", "layers", "frames"],
+  "properties": {
+    "canvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "palette": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "allOf": [
+          { "type": "string", "minLength": 1, "maxLength": 1 },
+          { "not": { "const": "_" } }
+        ]
+      },
+      "additionalProperties": { "$ref": "#/$defs/color" }
+    },
+    "background": {
+      "description": "Optional color used by the reserved `_` pixel placeholder in base layers and frame patches. Without this field, `_` renders transparent.",
+      "$ref": "#/$defs/color"
+    },
+    "layers": {
+      "description": "Base APX layers in Photoshop-style top-to-bottom order. Each frame starts from this base project.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "apx-v0.schema.json#/$defs/layer" }
+    },
+    "frames": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/frame" }
+    }
+  },
+  "$defs": {
+    "color": {
+      "type": "string",
+      "anyOf": [
+        { "const": "transparent" },
+        { "pattern": "^#[0-9a-fA-F]{3}$" },
+        { "pattern": "^#[0-9a-fA-F]{6}$" },
+        { "pattern": "^#[0-9a-fA-F]{8}$" },
+        {
+          "pattern": "^rgb\\(\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*\\)$"
+        },
+        {
+          "pattern": "^rgba\\(\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*,\\s*((0(\\.\\d+)?)|1(\\.0+)?|([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]))\\s*\\)$"
+        }
+      ]
+    },
+    "frame": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 120
+        },
+        "operations": {
+          "type": "array",
+          "default": [],
+          "items": { "$ref": "#/$defs/operation" }
+        }
+      }
+    },
+    "operation": {
+      "oneOf": [
+        { "$ref": "apx-patch-v0.schema.json#/$defs/set_palette" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/set_background" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/clear_background" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/add_layer" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/insert_layer" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/replace_layer" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/rename_layer" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/remove_layer" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/set_layer_visibility" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/set_layer_opacity" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/set_rows" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/add_chunk" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/move_layer" },
+        { "$ref": "apx-patch-v0.schema.json#/$defs/clear_layer" }
+      ]
+    }
+  }
+}

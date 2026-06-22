@@ -7,6 +7,8 @@ use serde::{Deserialize, Serialize};
 pub struct Project {
     pub canvas: Canvas,
     pub palette: BTreeMap<String, String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub background: Option<String>,
     #[serde(default)]
     pub layers: Vec<Layer>,
 }
@@ -43,12 +45,37 @@ pub struct PatchDocument {
 }
 
 #[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Animation {
+    pub canvas: Canvas,
+    pub palette: BTreeMap<String, String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub background: Option<String>,
+    #[serde(default)]
+    pub layers: Vec<Layer>,
+    pub frames: Vec<AnimationFrame>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct AnimationFrame {
+    #[serde(default)]
+    pub name: Option<String>,
+    #[serde(default = "default_frame_duration_ms")]
+    pub duration_ms: u32,
+    #[serde(default)]
+    pub operations: Vec<PatchOperation>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
 #[serde(tag = "op", rename_all = "snake_case")]
 pub enum PatchOperation {
     SetPalette {
         symbol: String,
         color: String,
     },
+    SetBackground {
+        color: String,
+    },
+    ClearBackground,
     AddLayer {
         layer: Layer,
     },
@@ -110,10 +137,25 @@ pub struct RgbaExport {
     pub pixels: Vec<[u8; 4]>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SupersampledImage {
+    pub width: u32,
+    pub height: u32,
+    pub scale: u32,
+    pub pixels: Vec<[u8; 4]>,
+}
+
+#[derive(Debug)]
+pub struct RenderedAnimationFrame {
+    pub duration_ms: u32,
+    pub pixels: Vec<[u8; 4]>,
+}
+
 #[derive(Debug, Serialize)]
 pub struct InspectSummary {
     pub width: u32,
     pub height: u32,
+    pub background: Option<String>,
     pub layer_order: String,
     pub palette_symbols: Vec<String>,
     pub layers: Vec<InspectLayer>,
@@ -145,6 +187,10 @@ fn default_opacity() -> f32 {
     1.0
 }
 
+fn default_frame_duration_ms() -> u32 {
+    120
+}
+
 pub fn validation_errors(project: &Project) -> Vec<String> {
     let mut errors = Vec::new();
 
@@ -167,6 +213,11 @@ pub fn validation_errors(project: &Project) -> Vec<String> {
         }
 
         let symbol_char = symbol.chars().next().unwrap();
+        if symbol_char == '_' {
+            errors.push("palette key `_` is reserved for the background placeholder".to_string());
+            continue;
+        }
+
         symbols.insert(symbol_char);
         match parse_color(value) {
             Ok(color) => {
@@ -182,6 +233,14 @@ pub fn validation_errors(project: &Project) -> Vec<String> {
         Some(color) if color[3] == 0 => {}
         Some(_) => errors.push("palette `.` must be transparent".to_string()),
         None => errors.push("palette must define `.` as transparent".to_string()),
+    }
+
+    if let Some(background) = &project.background {
+        if let Err(error) = parse_color(background) {
+            errors.push(format!(
+                "background has invalid color `{background}`: {error}"
+            ));
+        }
     }
 
     for (layer_index, layer) in project.layers.iter().enumerate() {
@@ -226,45 +285,145 @@ pub fn render_project(project: &Project) -> Result<Vec<[u8; 4]>> {
             continue;
         }
 
-        if let Some(rows) = &layer.rows {
-            paint_rows(
-                &mut output,
-                project.canvas.width,
-                0,
-                0,
-                rows,
-                layer.opacity,
-                &palette,
-            );
-        }
-
-        for chunk in &layer.chunks {
-            paint_rows(
-                &mut output,
-                project.canvas.width,
-                chunk.x,
-                chunk.y,
-                &chunk.rows,
-                layer.opacity,
-                &palette,
-            );
+        let layer_pixels = render_layer_pixels(project, layer, &palette, pixel_count);
+        for (index, source) in layer_pixels.into_iter().enumerate() {
+            if source[3] == 0 {
+                continue;
+            }
+            output[index] = alpha_over(output[index], source, layer.opacity);
         }
     }
 
     Ok(output)
 }
 
-pub fn apply_patch_document(mut project: Project, patch: &PatchDocument) -> Result<Project> {
+pub fn psd_bytes(project: &Project) -> Result<Vec<u8>> {
+    let errors = validation_errors(project);
+    if !errors.is_empty() {
+        return Err(anyhow!("APX validation failed:\n{}", errors.join("\n")));
+    }
+    validate_psd_limits(project)?;
+
+    let composite_pixels = render_project(project)?;
+    let layer_pixels = render_psd_layers(project)?;
+
+    let mut bytes = Vec::new();
+    write_psd_header(&mut bytes, project.canvas.width, project.canvas.height);
+    write_u32(&mut bytes, 0);
+    write_u32(&mut bytes, 0);
+
+    let layer_and_mask = psd_layer_and_mask_section(project, &layer_pixels)?;
+    write_u32_checked(
+        &mut bytes,
+        layer_and_mask.len(),
+        "PSD layer and mask section",
+    )?;
+    bytes.extend_from_slice(&layer_and_mask);
+
+    write_image_data(&mut bytes, &composite_pixels);
+    Ok(bytes)
+}
+
+pub fn fit_integer_scale(
+    source_width: u32,
+    source_height: u32,
+    target_width: u32,
+    target_height: u32,
+) -> Result<u32> {
+    if source_width == 0 || source_height == 0 {
+        return Err(anyhow!("source dimensions must be greater than 0"));
+    }
+    if target_width == 0 || target_height == 0 {
+        return Err(anyhow!("target dimensions must be greater than 0"));
+    }
+
+    let width_scale = target_width / source_width;
+    let height_scale = target_height / source_height;
+    Ok(width_scale.min(height_scale).max(1))
+}
+
+pub fn supersample_pixels(
+    width: u32,
+    height: u32,
+    pixels: &[[u8; 4]],
+    scale: u32,
+) -> Result<SupersampledImage> {
+    if width == 0 || height == 0 {
+        return Err(anyhow!("source dimensions must be greater than 0"));
+    }
+    if scale == 0 {
+        return Err(anyhow!("supersample scale must be greater than 0"));
+    }
+
+    let expected_len = (width as usize)
+        .checked_mul(height as usize)
+        .ok_or_else(|| anyhow!("source pixel count overflows usize"))?;
+    if pixels.len() != expected_len {
+        return Err(anyhow!(
+            "pixel count mismatch: expected {expected_len}, got {}",
+            pixels.len()
+        ));
+    }
+
+    let output_width = width
+        .checked_mul(scale)
+        .ok_or_else(|| anyhow!("supersampled width overflows u32"))?;
+    let output_height = height
+        .checked_mul(scale)
+        .ok_or_else(|| anyhow!("supersampled height overflows u32"))?;
+    let output_len = (output_width as usize)
+        .checked_mul(output_height as usize)
+        .ok_or_else(|| anyhow!("supersampled pixel count overflows usize"))?;
+    let mut output = vec![[0, 0, 0, 0]; output_len];
+
+    for y in 0..height {
+        for x in 0..width {
+            let source = pixels[(y * width + x) as usize];
+            let start_x = x * scale;
+            let start_y = y * scale;
+            for dy in 0..scale {
+                let output_y = start_y + dy;
+                let row_start = (output_y * output_width + start_x) as usize;
+                for dx in 0..scale {
+                    output[row_start + dx as usize] = source;
+                }
+            }
+        }
+    }
+
+    Ok(SupersampledImage {
+        width: output_width,
+        height: output_height,
+        scale,
+        pixels: output,
+    })
+}
+
+pub fn apply_patch_document(project: Project, patch: &PatchDocument) -> Result<Project> {
     if patch.operations.is_empty() {
         return Err(anyhow!("patch must contain at least one operation"));
     }
 
-    for operation in &patch.operations {
+    apply_patch_operations(project, &patch.operations)
+}
+
+pub fn apply_patch_operations(
+    mut project: Project,
+    operations: &[PatchOperation],
+) -> Result<Project> {
+    for operation in operations {
         match operation {
             PatchOperation::SetPalette { symbol, color } => {
-                ensure_single_symbol(symbol)?;
+                ensure_palette_symbol(symbol)?;
                 parse_color(color)?;
                 project.palette.insert(symbol.clone(), color.clone());
+            }
+            PatchOperation::SetBackground { color } => {
+                parse_color(color)?;
+                project.background = Some(color.clone());
+            }
+            PatchOperation::ClearBackground => {
+                project.background = None;
             }
             PatchOperation::AddLayer { layer } => {
                 ensure_layer_name_available(&project, &layer.name)?;
@@ -363,15 +522,99 @@ pub fn apply_patch_document(mut project: Project, patch: &PatchDocument) -> Resu
     Ok(project)
 }
 
+pub fn animation_base_project(animation: &Animation) -> Project {
+    Project {
+        canvas: animation.canvas.clone(),
+        palette: animation.palette.clone(),
+        background: animation.background.clone(),
+        layers: animation.layers.clone(),
+    }
+}
+
+pub fn animation_validation_errors(animation: &Animation) -> Vec<String> {
+    let base = animation_base_project(animation);
+    let base_errors = validation_errors(&base);
+    let mut errors: Vec<String> = base_errors
+        .iter()
+        .map(|error| format!("base {error}"))
+        .collect();
+
+    if animation.frames.is_empty() {
+        errors.push("frames must contain at least one frame".to_string());
+    }
+
+    if !base_errors.is_empty() {
+        return errors;
+    }
+
+    for (frame_index, frame) in animation.frames.iter().enumerate() {
+        if frame.duration_ms == 0 {
+            errors.push(format!(
+                "frame {frame_index} duration_ms must be greater than 0"
+            ));
+        }
+
+        if let Err(error) = apply_patch_operations(base.clone(), &frame.operations) {
+            errors.push(format!("frame {frame_index} patch failed: {error:#}"));
+        }
+    }
+
+    errors
+}
+
+pub fn render_animation_frame_project(
+    animation: &Animation,
+    frame_index: usize,
+) -> Result<Project> {
+    let frame = animation
+        .frames
+        .get(frame_index)
+        .ok_or_else(|| anyhow!("frame index {frame_index} is out of range"))?;
+    let base = animation_base_project(animation);
+    apply_patch_operations(base, &frame.operations)
+        .map_err(|error| anyhow!("frame {frame_index} patch failed: {error:#}"))
+}
+
+pub fn render_animation_frames(animation: &Animation) -> Result<Vec<RenderedAnimationFrame>> {
+    let errors = animation_validation_errors(animation);
+    if !errors.is_empty() {
+        return Err(anyhow!("APXA validation failed:\n{}", errors.join("\n")));
+    }
+
+    animation
+        .frames
+        .iter()
+        .enumerate()
+        .map(|(frame_index, frame)| {
+            let project = render_animation_frame_project(animation, frame_index)?;
+            let pixels = render_project(&project)?;
+            Ok(RenderedAnimationFrame {
+                duration_ms: frame.duration_ms,
+                pixels,
+            })
+        })
+        .collect()
+}
+
 pub fn chunk_dimensions(chunk: &Chunk) -> Option<(usize, usize)> {
-    let first = chunk.rows.first()?;
-    Some((first.chars().count(), chunk.rows.len()))
+    let width = infer_chunk_width(&chunk.rows)?;
+    Some((width, chunk.rows.len()))
 }
 
 fn ensure_single_symbol(symbol: &str) -> Result<()> {
     if symbol.chars().count() != 1 {
         return Err(anyhow!(
             "palette symbol `{symbol}` must be a single character"
+        ));
+    }
+    Ok(())
+}
+
+fn ensure_palette_symbol(symbol: &str) -> Result<()> {
+    ensure_single_symbol(symbol)?;
+    if symbol == "_" {
+        return Err(anyhow!(
+            "palette symbol `_` is reserved for the background placeholder"
         ));
     }
     Ok(())
@@ -475,7 +718,7 @@ fn validate_full_rows(
     }
 
     for (row_index, row) in rows.iter().enumerate() {
-        let width = row.chars().count();
+        let width = row_width(row, project.canvas.width as usize);
         if width != project.canvas.width as usize {
             errors.push(format!(
                 "{label} row {row_index} must have width {}, got {width}",
@@ -498,13 +741,18 @@ fn validate_chunk(
         return;
     }
 
-    let expected_width = chunk.rows[0].chars().count();
+    let Some(expected_width) = infer_chunk_width(&chunk.rows) else {
+        errors.push(format!(
+            "{label} uses `_` row shorthand but has no explicit-width row"
+        ));
+        return;
+    };
     if expected_width == 0 {
         errors.push(format!("{label} width must be greater than 0"));
     }
 
     for (row_index, row) in chunk.rows.iter().enumerate() {
-        let width = row.chars().count();
+        let width = row_width(row, expected_width);
         if width != expected_width {
             errors.push(format!(
                 "{label} row {row_index} must have width {expected_width}, got {width}"
@@ -541,6 +789,9 @@ fn validate_symbols(
     errors: &mut Vec<String>,
 ) {
     for (column_index, symbol) in row.chars().enumerate() {
+        if symbol == '_' {
+            continue;
+        }
         if !symbols.contains(&symbol) {
             errors.push(format!(
                 "{label} row {row_index} column {column_index} uses undefined palette symbol `{symbol}`"
@@ -550,7 +801,7 @@ fn validate_symbols(
 }
 
 fn parsed_palette(project: &Project) -> Result<BTreeMap<char, [u8; 4]>> {
-    project
+    let mut palette: BTreeMap<char, [u8; 4]> = project
         .palette
         .iter()
         .map(|(symbol, value)| {
@@ -560,12 +811,245 @@ fn parsed_palette(project: &Project) -> Result<BTreeMap<char, [u8; 4]>> {
                 .ok_or_else(|| anyhow!("empty palette key"))?;
             Ok((key, parse_color(value)?))
         })
-        .collect()
+        .collect::<Result<_>>()?;
+
+    let background = match &project.background {
+        Some(color) => parse_color(color)?,
+        None => [0, 0, 0, 0],
+    };
+    palette.insert('_', background);
+    Ok(palette)
+}
+
+fn render_psd_layers(project: &Project) -> Result<Vec<Vec<[u8; 4]>>> {
+    let palette = parsed_palette(project)?;
+    let pixel_count = checked_pixel_count(project)?;
+    let mut rendered = Vec::with_capacity(project.layers.len());
+
+    for layer in project.layers.iter().rev() {
+        rendered.push(render_layer_pixels(project, layer, &palette, pixel_count));
+    }
+
+    Ok(rendered)
+}
+
+fn render_layer_pixels(
+    project: &Project,
+    layer: &Layer,
+    palette: &BTreeMap<char, [u8; 4]>,
+    pixel_count: usize,
+) -> Vec<[u8; 4]> {
+    let mut pixels = vec![[0, 0, 0, 0]; pixel_count];
+    if let Some(rows) = &layer.rows {
+        paint_rows(
+            &mut pixels,
+            project.canvas.width,
+            project.canvas.width as usize,
+            0,
+            0,
+            rows,
+            1.0,
+            palette,
+        );
+    }
+
+    for chunk in &layer.chunks {
+        let Some((chunk_width, _)) = chunk_dimensions(chunk) else {
+            continue;
+        };
+        paint_rows(
+            &mut pixels,
+            project.canvas.width,
+            chunk_width,
+            chunk.x,
+            chunk.y,
+            &chunk.rows,
+            1.0,
+            palette,
+        );
+    }
+
+    pixels
+}
+
+fn validate_psd_limits(project: &Project) -> Result<()> {
+    if project.canvas.width > 30_000 || project.canvas.height > 30_000 {
+        return Err(anyhow!(
+            "PSD export supports canvas dimensions up to 30000x30000"
+        ));
+    }
+    if project.layers.len() > i16::MAX as usize {
+        return Err(anyhow!("PSD export supports at most {} layers", i16::MAX));
+    }
+    checked_pixel_count(project)?;
+    Ok(())
+}
+
+fn checked_pixel_count(project: &Project) -> Result<usize> {
+    (project.canvas.width as usize)
+        .checked_mul(project.canvas.height as usize)
+        .ok_or_else(|| anyhow!("canvas pixel count overflows usize"))
+}
+
+fn write_psd_header(bytes: &mut Vec<u8>, width: u32, height: u32) {
+    bytes.extend_from_slice(b"8BPS");
+    write_u16(bytes, 1);
+    bytes.extend_from_slice(&[0; 6]);
+    write_u16(bytes, 4);
+    write_u32(bytes, height);
+    write_u32(bytes, width);
+    write_u16(bytes, 8);
+    write_u16(bytes, 3);
+}
+
+fn psd_layer_and_mask_section(project: &Project, layer_pixels: &[Vec<[u8; 4]>]) -> Result<Vec<u8>> {
+    let mut layer_info = Vec::new();
+    write_i16(&mut layer_info, project.layers.len() as i16);
+
+    for layer in project.layers.iter().rev() {
+        write_layer_record(&mut layer_info, project, layer)?;
+    }
+
+    for pixels in layer_pixels {
+        write_layer_channel_data(&mut layer_info, pixels);
+    }
+
+    if layer_info.len() % 2 != 0 {
+        layer_info.push(0);
+    }
+
+    let mut section = Vec::new();
+    write_u32_checked(&mut section, layer_info.len(), "PSD layer info section")?;
+    section.extend_from_slice(&layer_info);
+    write_u32(&mut section, 0);
+    Ok(section)
+}
+
+fn write_layer_record(bytes: &mut Vec<u8>, project: &Project, layer: &Layer) -> Result<()> {
+    let channel_byte_count = checked_channel_byte_count(project)?;
+    write_i32(bytes, 0);
+    write_i32(bytes, 0);
+    write_i32(bytes, project.canvas.height as i32);
+    write_i32(bytes, project.canvas.width as i32);
+    write_u16(bytes, 4);
+
+    for channel_id in [0, 1, 2, -1] {
+        write_i16(bytes, channel_id);
+        write_u32_checked(bytes, channel_byte_count + 2, "PSD layer channel data")?;
+    }
+
+    bytes.extend_from_slice(b"8BIM");
+    bytes.extend_from_slice(b"norm");
+    bytes.push(to_u8(layer.opacity * 255.0));
+    bytes.push(0);
+    bytes.push(psd_layer_flags(layer));
+    bytes.push(0);
+
+    let extra = layer_extra_data(&layer.name);
+    write_u32_checked(bytes, extra.len(), "PSD layer extra data")?;
+    bytes.extend_from_slice(&extra);
+    Ok(())
+}
+
+fn psd_layer_flags(layer: &Layer) -> u8 {
+    // In Photoshop-compatible PSDs, bit 1 marks a layer as hidden.
+    if layer.visible { 0 } else { 1 << 1 }
+}
+
+fn checked_channel_byte_count(project: &Project) -> Result<usize> {
+    checked_pixel_count(project)
+}
+
+fn layer_extra_data(name: &str) -> Vec<u8> {
+    let mut extra = Vec::new();
+    write_u32(&mut extra, 0);
+    write_u32(&mut extra, 0);
+    write_pascal_layer_name(&mut extra, name);
+    write_unicode_layer_name(&mut extra, name);
+    extra
+}
+
+fn write_pascal_layer_name(bytes: &mut Vec<u8>, name: &str) {
+    let mut name_bytes: Vec<u8> = name
+        .bytes()
+        .map(|byte| {
+            if byte.is_ascii_graphic() || byte == b' ' {
+                byte
+            } else {
+                b'_'
+            }
+        })
+        .collect();
+    if name_bytes.is_empty() {
+        name_bytes.extend_from_slice(b"Layer");
+    }
+    name_bytes.truncate(u8::MAX as usize);
+
+    bytes.push(name_bytes.len() as u8);
+    bytes.extend_from_slice(&name_bytes);
+    while bytes.len() % 4 != 0 {
+        bytes.push(0);
+    }
+}
+
+fn write_unicode_layer_name(bytes: &mut Vec<u8>, name: &str) {
+    let utf16: Vec<u16> = name.encode_utf16().collect();
+    let mut data = Vec::with_capacity(4 + utf16.len() * 2);
+    write_u32(&mut data, utf16.len() as u32);
+    for code_unit in utf16 {
+        write_u16(&mut data, code_unit);
+    }
+
+    bytes.extend_from_slice(b"8BIM");
+    bytes.extend_from_slice(b"luni");
+    write_u32(bytes, data.len() as u32);
+    bytes.extend_from_slice(&data);
+}
+
+fn write_layer_channel_data(bytes: &mut Vec<u8>, pixels: &[[u8; 4]]) {
+    for channel in [0, 1, 2, 3] {
+        write_u16(bytes, 0);
+        for pixel in pixels {
+            bytes.push(pixel[channel]);
+        }
+    }
+}
+
+fn write_image_data(bytes: &mut Vec<u8>, pixels: &[[u8; 4]]) {
+    write_u16(bytes, 0);
+    for channel in [0, 1, 2, 3] {
+        for pixel in pixels {
+            bytes.push(pixel[channel]);
+        }
+    }
+}
+
+fn write_u16(bytes: &mut Vec<u8>, value: u16) {
+    bytes.extend_from_slice(&value.to_be_bytes());
+}
+
+fn write_i16(bytes: &mut Vec<u8>, value: i16) {
+    bytes.extend_from_slice(&value.to_be_bytes());
+}
+
+fn write_u32(bytes: &mut Vec<u8>, value: u32) {
+    bytes.extend_from_slice(&value.to_be_bytes());
+}
+
+fn write_u32_checked(bytes: &mut Vec<u8>, value: usize, label: &str) -> Result<()> {
+    let value = u32::try_from(value).map_err(|_| anyhow!("{label} exceeds PSD size limits"))?;
+    write_u32(bytes, value);
+    Ok(())
+}
+
+fn write_i32(bytes: &mut Vec<u8>, value: i32) {
+    bytes.extend_from_slice(&value.to_be_bytes());
 }
 
 fn paint_rows(
     output: &mut [[u8; 4]],
     canvas_width: u32,
+    paint_width: usize,
     offset_x: u32,
     offset_y: u32,
     rows: &[String],
@@ -573,7 +1057,13 @@ fn paint_rows(
     palette: &BTreeMap<char, [u8; 4]>,
 ) {
     for (row_index, row) in rows.iter().enumerate() {
-        for (column_index, symbol) in row.chars().enumerate() {
+        let symbols: Box<dyn Iterator<Item = char> + '_> = if row == "_" {
+            Box::new(std::iter::repeat('_').take(paint_width))
+        } else {
+            Box::new(row.chars())
+        };
+
+        for (column_index, symbol) in symbols.enumerate() {
             let source = palette[&symbol];
             if source[3] == 0 {
                 continue;
@@ -585,6 +1075,20 @@ fn paint_rows(
             output[index] = alpha_over(output[index], source, opacity);
         }
     }
+}
+
+fn row_width(row: &str, shorthand_width: usize) -> usize {
+    if row == "_" {
+        shorthand_width
+    } else {
+        row.chars().count()
+    }
+}
+
+fn infer_chunk_width(rows: &[String]) -> Option<usize> {
+    rows.iter()
+        .find(|row| row.as_str() != "_")
+        .map(|row| row.chars().count())
 }
 
 fn alpha_over(destination: [u8; 4], source: [u8; 4], layer_opacity: f32) -> [u8; 4] {
@@ -814,6 +1318,202 @@ mod tests {
     }
 
     #[test]
+    fn underscore_defaults_to_transparent_and_supports_full_row_shorthand() {
+        let project: Project = serde_json::from_str(
+            r##"
+            {
+              "canvas": { "width": 3, "height": 2 },
+              "palette": {
+                ".": "transparent",
+                "R": "#ff0000"
+              },
+              "layers": [
+                {
+                  "name": "paint",
+                  "rows": [
+                    "_",
+                    "R_R"
+                  ]
+                }
+              ]
+            }
+            "##,
+        )
+        .unwrap();
+
+        let errors = validation_errors(&project);
+        assert!(errors.is_empty(), "{errors:?}");
+
+        let pixels = render_project(&project).unwrap();
+        assert_eq!(
+            pixels,
+            vec![
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [255, 0, 0, 255],
+                [0, 0, 0, 0],
+                [255, 0, 0, 255],
+            ]
+        );
+    }
+
+    #[test]
+    fn underscore_uses_background_color_when_background_is_set() {
+        let project: Project = serde_json::from_str(
+            r##"
+            {
+              "canvas": { "width": 3, "height": 2 },
+              "background": "#123456",
+              "palette": {
+                ".": "transparent",
+                "R": "#ff0000"
+              },
+              "layers": [
+                {
+                  "name": "paint",
+                  "rows": [
+                    "_",
+                    "R_R"
+                  ]
+                }
+              ]
+            }
+            "##,
+        )
+        .unwrap();
+
+        let errors = validation_errors(&project);
+        assert!(errors.is_empty(), "{errors:?}");
+
+        let pixels = render_project(&project).unwrap();
+        assert_eq!(
+            pixels,
+            vec![
+                [18, 52, 86, 255],
+                [18, 52, 86, 255],
+                [18, 52, 86, 255],
+                [255, 0, 0, 255],
+                [18, 52, 86, 255],
+                [255, 0, 0, 255],
+            ]
+        );
+    }
+
+    #[test]
+    fn rejects_palette_underscore_because_it_is_reserved() {
+        let mut project = sample_project();
+        project
+            .palette
+            .insert("_".to_string(), "#123456".to_string());
+
+        let errors = validation_errors(&project);
+        assert!(errors.iter().any(|error| error.contains("reserved")));
+    }
+
+    #[test]
+    fn chunk_underscore_shorthand_uses_explicit_row_width() {
+        let project: Project = serde_json::from_str(
+            r##"
+            {
+              "canvas": { "width": 3, "height": 2 },
+              "background": "#010203",
+              "palette": {
+                ".": "transparent",
+                "R": "#ff0000"
+              },
+              "layers": [
+                {
+                  "name": "paint",
+                  "chunks": [
+                    { "x": 0, "y": 0, "rows": ["R_R", "_"] }
+                  ]
+                }
+              ]
+            }
+            "##,
+        )
+        .unwrap();
+
+        let errors = validation_errors(&project);
+        assert!(errors.is_empty(), "{errors:?}");
+        assert_eq!(
+            chunk_dimensions(&project.layers[0].chunks[0]).unwrap(),
+            (3, 2)
+        );
+
+        let pixels = render_project(&project).unwrap();
+        assert_eq!(
+            pixels,
+            vec![
+                [255, 0, 0, 255],
+                [1, 2, 3, 255],
+                [255, 0, 0, 255],
+                [1, 2, 3, 255],
+                [1, 2, 3, 255],
+                [1, 2, 3, 255],
+            ]
+        );
+    }
+
+    #[test]
+    fn rejects_chunk_underscore_shorthand_without_explicit_width() {
+        let project: Project = serde_json::from_str(
+            r##"
+            {
+              "canvas": { "width": 3, "height": 2 },
+              "background": "#010203",
+              "palette": {
+                ".": "transparent"
+              },
+              "layers": [
+                {
+                  "name": "paint",
+                  "chunks": [
+                    { "x": 0, "y": 0, "rows": ["_", "_"] }
+                  ]
+                }
+              ]
+            }
+            "##,
+        )
+        .unwrap();
+
+        let errors = validation_errors(&project);
+        assert!(errors.iter().any(|error| {
+            error.contains("uses `_` row shorthand but has no explicit-width row")
+        }));
+    }
+
+    #[test]
+    fn patch_can_set_and_clear_background() {
+        let project = sample_project();
+        let patch: PatchDocument = serde_json::from_str(
+            r##"
+            {
+              "operations": [
+                { "op": "set_background", "color": "#010203" },
+                {
+                  "op": "set_rows",
+                  "layer": "base",
+                  "rows": ["_", "_", "_", "_"]
+                }
+              ]
+            }
+            "##,
+        )
+        .unwrap();
+
+        let patched = apply_patch_document(project, &patch).unwrap();
+        assert_eq!(patched.background.as_deref(), Some("#010203"));
+        assert_eq!(render_project(&patched).unwrap()[0], [1, 2, 3, 255]);
+
+        let cleared = apply_patch_operations(patched, &[PatchOperation::ClearBackground]).unwrap();
+        assert_eq!(cleared.background, None);
+        assert_eq!(render_project(&cleared).unwrap()[0], [0, 0, 0, 0]);
+    }
+
+    #[test]
     fn applies_palette_and_chunk_patch() {
         let project = sample_project();
         let patch: PatchDocument = serde_json::from_str(
@@ -967,6 +1667,312 @@ mod tests {
     }
 
     #[test]
+    fn applies_layer_opacity_once_after_layer_pixels() {
+        let project: Project = serde_json::from_str(
+            r##"
+            {
+              "canvas": { "width": 1, "height": 1 },
+              "palette": {
+                ".": "transparent",
+                "R": "#ff0000",
+                "B": "#0000ff"
+              },
+              "layers": [
+                {
+                  "name": "paint",
+                  "opacity": 0.5,
+                  "rows": ["R"],
+                  "chunks": [
+                    { "x": 0, "y": 0, "rows": ["B"] }
+                  ]
+                }
+              ]
+            }
+            "##,
+        )
+        .unwrap();
+
+        let pixels = render_project(&project).unwrap();
+        assert_eq!(pixels[0], [0, 0, 255, 128]);
+    }
+
+    #[test]
+    fn calculates_integer_fit_scale_for_model_preview() {
+        assert_eq!(fit_integer_scale(32, 32, 1280, 720).unwrap(), 22);
+        assert_eq!(fit_integer_scale(128, 64, 1280, 720).unwrap(), 10);
+        assert_eq!(fit_integer_scale(200, 200, 1280, 720).unwrap(), 3);
+        assert_eq!(fit_integer_scale(1600, 900, 1280, 720).unwrap(), 1);
+    }
+
+    #[test]
+    fn supersamples_pixels_by_exact_integer_blocks() {
+        let red = [255, 0, 0, 255];
+        let green = [0, 255, 0, 255];
+        let blue = [0, 0, 255, 255];
+        let clear = [0, 0, 0, 0];
+        let image = supersample_pixels(2, 2, &[red, green, blue, clear], 3).unwrap();
+
+        assert_eq!(image.width, 6);
+        assert_eq!(image.height, 6);
+        assert_eq!(image.scale, 3);
+        for y in 0..3 {
+            for x in 0..3 {
+                assert_eq!(image.pixels[(y * 6 + x) as usize], red);
+                assert_eq!(image.pixels[(y * 6 + x + 3) as usize], green);
+                assert_eq!(image.pixels[((y + 3) * 6 + x) as usize], blue);
+                assert_eq!(image.pixels[((y + 3) * 6 + x + 3) as usize], clear);
+            }
+        }
+    }
+
+    #[test]
+    fn exports_parseable_layered_psd() {
+        let project = sample_project();
+        let bytes = psd_bytes(&project).unwrap();
+
+        assert_eq!(&bytes[0..4], b"8BPS");
+        assert_eq!(u16::from_be_bytes([bytes[12], bytes[13]]), 4);
+        assert_eq!(
+            u32::from_be_bytes([bytes[18], bytes[19], bytes[20], bytes[21]]),
+            4
+        );
+        assert_eq!(
+            u32::from_be_bytes([bytes[14], bytes[15], bytes[16], bytes[17]]),
+            4
+        );
+
+        let psd = psd::Psd::from_bytes(&bytes).unwrap();
+        assert_eq!(psd.width(), 4);
+        assert_eq!(psd.height(), 4);
+        assert_eq!(psd.layers().len(), 2);
+
+        let layer_names: Vec<_> = psd.layers().iter().map(|layer| layer.name()).collect();
+        assert_eq!(layer_names, vec!["shadow", "base"]);
+        assert_eq!(psd_layer_record_flags(&bytes), vec![0, 0]);
+
+        let shadow = psd.layer_by_name("shadow").unwrap();
+        let shadow_pixels = shadow.rgba();
+        let shadow_index = ((2 * 4 + 2) * 4) as usize;
+        assert_eq!(
+            &shadow_pixels[shadow_index..shadow_index + 4],
+            &[0, 0, 0, 128]
+        );
+
+        let expected = render_project(&project).unwrap();
+        let expected_bytes: Vec<u8> = expected.into_iter().flatten().collect();
+        assert_eq!(psd.rgba(), expected_bytes);
+    }
+
+    #[test]
+    fn exports_psd_with_unicode_layer_name() {
+        let project: Project = serde_json::from_str(
+            r##"
+            {
+              "canvas": { "width": 1, "height": 1 },
+              "palette": {
+                ".": "transparent",
+                "R": "#ff0000"
+              },
+              "layers": [
+                { "name": "顶层", "rows": ["R"] }
+              ]
+            }
+            "##,
+        )
+        .unwrap();
+
+        let bytes = psd_bytes(&project).unwrap();
+        let psd = psd::Psd::from_bytes(&bytes).unwrap();
+        assert!(psd.layer_by_name("顶层").is_some());
+    }
+
+    #[test]
+    fn exports_photoshop_compatible_visibility_flags() {
+        let project: Project = serde_json::from_str(
+            r##"
+            {
+              "canvas": { "width": 1, "height": 1 },
+              "palette": {
+                ".": "transparent",
+                "R": "#ff0000",
+                "B": "#0000ff"
+              },
+              "layers": [
+                { "name": "visible_top", "rows": ["R"] },
+                { "name": "hidden_bottom", "visible": false, "rows": ["B"] }
+              ]
+            }
+            "##,
+        )
+        .unwrap();
+
+        let bytes = psd_bytes(&project).unwrap();
+        let flags = psd_layer_record_flags(&bytes);
+        assert_eq!(flags, vec![1 << 1, 0]);
+    }
+
+    #[test]
+    fn exports_transparency_channels_and_layer_opacity() {
+        let project: Project = serde_json::from_str(
+            r##"
+            {
+              "canvas": { "width": 2, "height": 1 },
+              "palette": {
+                ".": "transparent",
+                "S": "rgba(10,20,30,0.25)",
+                "O": "#112233"
+              },
+              "layers": [
+                { "name": "semi_top", "opacity": 0.5, "rows": ["S."] },
+                { "name": "hidden_bottom", "visible": false, "rows": ["OO"] }
+              ]
+            }
+            "##,
+        )
+        .unwrap();
+
+        let pixels = render_project(&project).unwrap();
+        assert_eq!(pixels, vec![[10, 20, 30, 32], [0, 0, 0, 0]]);
+
+        let bytes = psd_bytes(&project).unwrap();
+        let layers = psd_layer_records(&bytes);
+        assert_eq!(layers.len(), 2);
+
+        let hidden_bottom = &layers[0];
+        assert_eq!(hidden_bottom.flags, 1 << 1);
+        assert_eq!(hidden_bottom.opacity, 255);
+        assert_eq!(hidden_bottom.channel(0), &[0x11, 0x11]);
+        assert_eq!(hidden_bottom.channel(1), &[0x22, 0x22]);
+        assert_eq!(hidden_bottom.channel(2), &[0x33, 0x33]);
+        assert_eq!(hidden_bottom.channel(-1), &[255, 255]);
+
+        let semi_top = &layers[1];
+        assert_eq!(semi_top.flags, 0);
+        assert_eq!(semi_top.opacity, 128);
+        assert_eq!(semi_top.channel(0), &[10, 0]);
+        assert_eq!(semi_top.channel(1), &[20, 0]);
+        assert_eq!(semi_top.channel(2), &[30, 0]);
+        assert_eq!(semi_top.channel(-1), &[64, 0]);
+    }
+
+    fn psd_layer_record_flags(bytes: &[u8]) -> Vec<u8> {
+        psd_layer_records(bytes)
+            .into_iter()
+            .map(|layer| layer.flags)
+            .collect()
+    }
+
+    #[derive(Debug)]
+    struct TestPsdLayerRecord {
+        opacity: u8,
+        flags: u8,
+        channel_data: Vec<(i16, Vec<u8>)>,
+    }
+
+    impl TestPsdLayerRecord {
+        fn channel(&self, channel_id: i16) -> &[u8] {
+            self.channel_data
+                .iter()
+                .find_map(|(candidate, data)| {
+                    if *candidate == channel_id {
+                        Some(data.as_slice())
+                    } else {
+                        None
+                    }
+                })
+                .unwrap()
+        }
+    }
+
+    fn psd_layer_records(bytes: &[u8]) -> Vec<TestPsdLayerRecord> {
+        let mut offset = 26;
+        offset = skip_length_prefixed_section(bytes, offset);
+        offset = skip_length_prefixed_section(bytes, offset);
+
+        let layer_and_mask_len = read_u32_at(bytes, offset) as usize;
+        offset += 4;
+        let layer_and_mask_end = offset + layer_and_mask_len;
+        assert!(layer_and_mask_end <= bytes.len());
+
+        let layer_info_len = read_u32_at(bytes, offset) as usize;
+        offset += 4;
+        let layer_info_end = offset + layer_info_len;
+        assert!(layer_info_end <= layer_and_mask_end);
+
+        let layer_count = read_i16_at(bytes, offset).unsigned_abs() as usize;
+        offset += 2;
+
+        let mut layers = Vec::with_capacity(layer_count);
+        for _ in 0..layer_count {
+            offset += 16;
+            let channel_count = read_u16_at(bytes, offset) as usize;
+            offset += 2;
+            let mut channel_lengths = Vec::with_capacity(channel_count);
+            for _ in 0..channel_count {
+                let channel_id = read_i16_at(bytes, offset);
+                let channel_len = read_u32_at(bytes, offset + 2) as usize;
+                channel_lengths.push((channel_id, channel_len));
+                offset += 6;
+            }
+
+            offset += 8;
+            let opacity = bytes[offset];
+            offset += 2;
+            let flags = bytes[offset];
+            offset += 2;
+            let extra_len = read_u32_at(bytes, offset) as usize;
+            offset += 4 + extra_len;
+
+            layers.push((opacity, flags, channel_lengths));
+        }
+
+        layers
+            .into_iter()
+            .map(|(opacity, flags, channel_lengths)| {
+                let mut channel_data = Vec::with_capacity(channel_lengths.len());
+                for (channel_id, channel_len) in channel_lengths {
+                    assert_eq!(read_u16_at(bytes, offset), 0);
+                    offset += 2;
+                    let data_len = channel_len - 2;
+                    let data = bytes[offset..offset + data_len].to_vec();
+                    offset += data_len;
+                    channel_data.push((channel_id, data));
+                }
+
+                TestPsdLayerRecord {
+                    opacity,
+                    flags,
+                    channel_data,
+                }
+            })
+            .collect()
+    }
+
+    fn skip_length_prefixed_section(bytes: &[u8], offset: usize) -> usize {
+        let len = read_u32_at(bytes, offset) as usize;
+        let next = offset + 4 + len;
+        assert!(next <= bytes.len());
+        next
+    }
+
+    fn read_u16_at(bytes: &[u8], offset: usize) -> u16 {
+        u16::from_be_bytes([bytes[offset], bytes[offset + 1]])
+    }
+
+    fn read_i16_at(bytes: &[u8], offset: usize) -> i16 {
+        i16::from_be_bytes([bytes[offset], bytes[offset + 1]])
+    }
+
+    fn read_u32_at(bytes: &[u8], offset: usize) -> u32 {
+        u32::from_be_bytes([
+            bytes[offset],
+            bytes[offset + 1],
+            bytes[offset + 2],
+            bytes[offset + 3],
+        ])
+    }
+
+    #[test]
     fn adds_layer_at_top_by_default() {
         let project = sample_project();
         let patch: PatchDocument = serde_json::from_str(
@@ -1084,5 +2090,92 @@ mod tests {
         let shadow = &patched.layers[layer_index(&patched, "shadow")];
         assert!(shadow.rows.is_none());
         assert!(shadow.chunks.is_empty());
+    }
+
+    fn sample_animation() -> Animation {
+        serde_json::from_str(
+            r##"
+            {
+              "canvas": { "width": 2, "height": 2 },
+              "palette": {
+                ".": "transparent",
+                "R": "#ff0000"
+              },
+              "layers": [
+                {
+                  "name": "slime",
+                  "rows": [
+                    ".R",
+                    "RR"
+                  ]
+                }
+              ],
+              "frames": [
+                {
+                  "name": "squash",
+                  "duration_ms": 100,
+                  "operations": []
+                },
+                {
+                  "name": "jump",
+                  "duration_ms": 80,
+                  "operations": [
+                    {
+                      "op": "set_rows",
+                      "layer": "slime",
+                      "rows": [
+                        "RR",
+                        ".R"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+            "##,
+        )
+        .unwrap()
+    }
+
+    #[test]
+    fn validates_animation_with_empty_first_frame_patch() {
+        let errors = animation_validation_errors(&sample_animation());
+        assert!(errors.is_empty(), "{errors:?}");
+    }
+
+    #[test]
+    fn renders_animation_frames_from_base_and_frame_patches() {
+        let frames = render_animation_frames(&sample_animation()).unwrap();
+        assert_eq!(frames.len(), 2);
+        assert_eq!(frames[0].duration_ms, 100);
+        assert_eq!(frames[1].duration_ms, 80);
+        assert_ne!(frames[0].pixels, frames[1].pixels);
+    }
+
+    #[test]
+    fn animation_frames_inherit_background_placeholder_color() {
+        let mut animation = sample_animation();
+        animation.background = Some("#010203".to_string());
+        animation.layers[0].rows = Some(vec!["_R".to_string(), "R_".to_string()]);
+
+        let frames = render_animation_frames(&animation).unwrap();
+        assert_eq!(frames[0].pixels[0], [1, 2, 3, 255]);
+        assert_eq!(frames[0].pixels[1], [255, 0, 0, 255]);
+    }
+
+    #[test]
+    fn rejects_animation_frame_patch_that_breaks_canvas_rules() {
+        let mut animation = sample_animation();
+        animation.frames[1].operations = vec![PatchOperation::SetRows {
+            layer: "slime".to_string(),
+            rows: vec!["R".to_string()],
+        }];
+
+        let errors = animation_validation_errors(&animation);
+        assert!(
+            errors
+                .iter()
+                .any(|error| error.contains("frame 1 patch failed"))
+        );
     }
 }

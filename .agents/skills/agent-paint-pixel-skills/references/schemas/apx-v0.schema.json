@@ -19,11 +19,16 @@
       "type": "object",
       "minProperties": 1,
       "propertyNames": {
-        "type": "string",
-        "minLength": 1,
-        "maxLength": 1
+        "allOf": [
+          { "type": "string", "minLength": 1, "maxLength": 1 },
+          { "not": { "const": "_" } }
+        ]
       },
       "additionalProperties": { "$ref": "#/$defs/color" }
+    },
+    "background": {
+      "description": "Optional color used by the reserved `_` pixel placeholder. Without this field, `_` renders transparent.",
+      "$ref": "#/$defs/color"
     },
     "layers": {
       "description": "Photoshop-style top-to-bottom stack. Item 0 is the visual top/front layer; the last item is the bottom/back layer.",

@@ -6,11 +6,12 @@ AgentPaint has a working v0.2 CLI foundation:
 
 - Rust CLI crate named `agentpaint`.
 - APX JSON source format with canvas, palette, layers, full rows, and chunks.
+- Reserved `_` transparent/background placeholder with optional top-level `background`.
 - Photoshop-style top-to-bottom layer ordering, where `layers[0]` is the visual top layer.
-- `validate`, `inspect`, `render`, `patch`, and `export-rgba` commands.
-- APX project and APX patch JSON Schema files.
-- Unit tests and a regenerated style/resolution example matrix.
-- Installable Codex Skill for APX pixel-art generation and patch iteration.
+- `validate`, `inspect`, `render`, `supersample`, `patch`, `export-rgba`, `export-psd`, `validate-animation`, `inspect-animation`, `render-frame`, `supersample-frame`, and `render-gif` commands.
+- APX project, APX patch, and APXA animation JSON Schema files.
+- Unit tests and a regenerated style/resolution example matrix, including APXA GIF examples and README showcase assets.
+- Installable cross-platform Agent Skill for APX/APXA pixel-art generation, inspection, export, and patch iteration.
 - Install documentation and install scripts.
 
 ## v0.2 Completion Checklist
@@ -24,6 +25,10 @@ AgentPaint has a working v0.2 CLI foundation:
 - [x] Add install scripts for Windows PowerShell and POSIX shells.
 - [x] Add a concise README with usage, format, and install entry points.
 - [x] Update the Codex Skill to use the installed `agentpaint` command, the new `patch` command, and bundled schema files.
+- [x] Add cross-platform skill install targets plus Codex/Claude plugin metadata.
+- [x] Add APXA animation validation, frame rendering, supersampled frame previews, and GIF export.
+- [x] Add PSD export with layer names, visibility, opacity, and palette alpha mapping.
+- [x] Add Chinese documentation and README showcase assets.
 - [x] Run `cargo fmt`, `cargo test`, schema-adjacent CLI checks, and skill validation.
 
 ## v0.2 Patch Format
@@ -58,6 +63,8 @@ Required behavior:
 Initial operations:
 
 - `set_palette`
+- `set_background`
+- `clear_background`
 - `add_layer`
 - `insert_layer`
 - `replace_layer`
@@ -75,6 +82,5 @@ Initial operations:
 - MCP server exposing validate/render/patch tools.
 - Web UI for preview, layer visibility, zoom, and manual pixel edits.
 - APX versioning field and migration command.
-- Animated frame support.
 - Layer groups and masks.
 - Release packaging.
