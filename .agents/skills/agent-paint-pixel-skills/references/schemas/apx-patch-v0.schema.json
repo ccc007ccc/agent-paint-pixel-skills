@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentpaint.local/schemas/apx-patch-v0.schema.json",
+  "title": "AgentPaint APX Patch v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["operations"],
+  "properties": {
+    "operations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "#/$defs/set_palette" },
+          { "$ref": "#/$defs/add_layer" },
+          { "$ref": "#/$defs/insert_layer" },
+          { "$ref": "#/$defs/replace_layer" },
+          { "$ref": "#/$defs/rename_layer" },
+          { "$ref": "#/$defs/remove_layer" },
+          { "$ref": "#/$defs/set_layer_visibility" },
+          { "$ref": "#/$defs/set_layer_opacity" },
+          { "$ref": "#/$defs/set_rows" },
+          { "$ref": "#/$defs/add_chunk" },
+          { "$ref": "#/$defs/move_layer" },
+          { "$ref": "#/$defs/clear_layer" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "color": {
+      "type": "string",
+      "anyOf": [
+        { "const": "transparent" },
+        { "pattern": "^#[0-9a-fA-F]{3}$" },
+        { "pattern": "^#[0-9a-fA-F]{6}$" },
+        { "pattern": "^#[0-9a-fA-F]{8}$" },
+        { "pattern": "^rgb\\(" },
+        { "pattern": "^rgba\\(" }
+      ]
+    },
+    "chunk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "rows"],
+      "properties": {
+        "x": { "type": "integer", "minimum": 0 },
+        "y": { "type": "integer", "minimum": 0 },
+        "rows": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "visible": { "type": "boolean", "default": true },
+        "opacity": { "type": "number", "minimum": 0, "maximum": 1, "default": 1 },
+        "rows": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "chunks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/chunk" }
+        }
+      }
+    },
+    "set_palette": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "symbol", "color"],
+      "properties": {
+        "op": { "const": "set_palette" },
+        "symbol": { "type": "string", "minLength": 1, "maxLength": 1 },
+        "color": { "$ref": "#/$defs/color" }
+      }
+    },
+    "add_layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer"],
+      "properties": {
+        "op": { "const": "add_layer" },
+        "layer": { "$ref": "#/$defs/layer" }
+      }
+    },
+    "insert_layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer"],
+      "oneOf": [
+        { "required": ["to_index"] },
+        { "required": ["before"] },
+        { "required": ["after"] }
+      ],
+      "properties": {
+        "op": { "const": "insert_layer" },
+        "layer": { "$ref": "#/$defs/layer" },
+        "to_index": { "type": "integer", "minimum": 0 },
+        "before": { "type": "string", "minLength": 1 },
+        "after": { "type": "string", "minLength": 1 }
+      }
+    },
+    "replace_layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer"],
+      "properties": {
+        "op": { "const": "replace_layer" },
+        "layer": { "$ref": "#/$defs/layer" }
+      }
+    },
+    "rename_layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer", "name"],
+      "properties": {
+        "op": { "const": "rename_layer" },
+        "layer": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 }
+      }
+    },
+    "remove_layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer"],
+      "properties": {
+        "op": { "const": "remove_layer" },
+        "layer": { "type": "string", "minLength": 1 }
+      }
+    },
+    "set_layer_visibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer", "visible"],
+      "properties": {
+        "op": { "const": "set_layer_visibility" },
+        "layer": { "type": "string", "minLength": 1 },
+        "visible": { "type": "boolean" }
+      }
+    },
+    "set_layer_opacity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer", "opacity"],
+      "properties": {
+        "op": { "const": "set_layer_opacity" },
+        "layer": { "type": "string", "minLength": 1 },
+        "opacity": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "set_rows": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer", "rows"],
+      "properties": {
+        "op": { "const": "set_rows" },
+        "layer": { "type": "string", "minLength": 1 },
+        "rows": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "add_chunk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer", "x", "y", "rows"],
+      "properties": {
+        "op": { "const": "add_chunk" },
+        "layer": { "type": "string", "minLength": 1 },
+        "x": { "type": "integer", "minimum": 0 },
+        "y": { "type": "integer", "minimum": 0 },
+        "rows": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "move_layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer"],
+      "oneOf": [
+        { "required": ["to_index"] },
+        { "required": ["before"] },
+        { "required": ["after"] }
+      ],
+      "properties": {
+        "op": { "const": "move_layer" },
+        "layer": { "type": "string", "minLength": 1 },
+        "to_index": { "type": "integer", "minimum": 0 },
+        "before": { "type": "string", "minLength": 1 },
+        "after": { "type": "string", "minLength": 1 }
+      }
+    },
+    "clear_layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["op", "layer"],
+      "properties": {
+        "op": { "const": "clear_layer" },
+        "layer": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

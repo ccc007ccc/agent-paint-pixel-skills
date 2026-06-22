@@ -1,49 +1,66 @@
 ---
 name: agent-paint-pixel-skills
-description: Generate, edit, validate, and render AgentPaint APX pixel-art source files with style-aware pixel-art guidance. Use when Codex needs to create layered pixel art, choose a pixel-art style or era, convert a pixel-art idea into APX JSON, repair APX validation errors, render APX to PNG, export RGBA JSON, or make local pixel edits with rows/chunks instead of raw RGBA arrays.
+description: Generate, edit, validate, and render AgentPaint APX pixel-art source files with style-aware pixel-art guidance. Use when Codex needs to create layered pixel art at the exact requested resolution, choose a pixel-art style or era, convert a pixel-art idea into APX JSON, repair APX validation errors, render APX to PNG, export RGBA JSON, or make local pixel edits with rows/chunks instead of raw RGBA arrays.
 ---
 
 # Agent Paint Pixel Skills
 
 ## Workflow
 
-1. Work in the AgentPaint repository root unless the user gives another path.
-2. Create or edit an `.apx` JSON file rather than writing raw RGBA arrays.
-3. Before drawing, infer or choose a style brief: style family, canvas, projection, palette size, outline policy, shading policy, texture policy, light direction, and layers.
-4. Read `references/pixel-art-style-guide.md` when the user asks for a specific style, era, mood, genre, or when making a new non-trivial sprite.
-5. Use that guide as an index: infer the best style from the user's words, then load the matching `references/styles/*.md` file. Load at most two style files for explicit hybrids.
-6. Start the APX with `canvas`, `palette`, and a short layer plan.
-7. Use full-canvas `rows` for 16x16 and 32x32 sprites.
-8. Use `chunks` for local edits, 64x64+ images, and high-detail layers.
-9. Run validation before rendering:
+1. Work in the user's current workspace or the output directory they request.
+2. Do not look for or require the AgentPaint source repository during normal skill use.
+3. Use the installed `agentpaint` CLI from `PATH`. If `agentpaint --help` fails, ask the user to install the CLI instead of falling back to `cargo run`.
+4. Create or edit an `.apx` JSON file rather than writing raw RGBA arrays.
+5. Before drawing, infer or choose a style brief: style family, canvas, projection, palette size, outline policy, shading policy, texture policy, light direction, and layers.
+6. Read bundled `references/pixel-art-style-guide.md` when the user asks for a specific style, era, mood, genre, or when making a new non-trivial sprite.
+7. Use that guide as an index: infer the best style from the user's words, then load the matching bundled `references/styles/*.md` file. Load at most two style files for explicit hybrids.
+8. Start the APX with `canvas`, `palette`, and a short layer plan.
+9. Use full-canvas `rows` for 16x16 and 32x32 sprites.
+10. Use `chunks` for local edits, 64x64+ images, and high-detail layers.
+11. Run validation before rendering:
 
 ```bash
-cargo run -- validate <file.apx>
+agentpaint validate <file.apx>
 ```
 
-10. If validation fails, repair only the invalid layer, row, chunk, or palette entry.
-11. For local edits, prefer patch files and the `patch` command over rewriting the full APX:
+12. If validation fails, repair only the invalid layer, row, chunk, or palette entry.
+13. For local edits, prefer patch files and the `patch` command over rewriting the full APX:
 
 ```bash
-cargo run -- patch <input.apx> --patch <patch.json> --out <output.apx>
+agentpaint patch <input.apx> --patch <patch.json> --out <output.apx>
 ```
 
-12. Adjust layer order with `move_layer` instead of rewriting the `layers` array:
+14. Adjust layer order with `move_layer` instead of rewriting the `layers` array:
 
 ```json
 { "op": "move_layer", "layer": "highlight", "before": "base" }
 ```
 
-13. Render after validation when the user wants an image preview or export:
+15. Render after validation when the user wants an image preview or export:
 
 ```bash
-cargo run -- render <file.apx> --out <file.png>
+agentpaint render <file.apx> --out <file.png>
 ```
 
-14. Export RGBA JSON only when specifically requested:
+16. Export RGBA JSON only when specifically requested:
 
 ```bash
-cargo run -- export-rgba <file.apx> --out <file.rgba.json>
+agentpaint export-rgba <file.apx> --out <file.rgba.json>
+```
+
+## Hard Output Rules
+
+- Match requested dimensions exactly. If the user asks for `200x200`, the APX must use `"canvas": { "width": 200, "height": 200 }`.
+- Do not draw at a smaller or larger resolution and resize it later.
+- Do not use scaling, upscaling, downscaling, resampling, or image conversion to satisfy the requested dimensions.
+- Do not write or run helper programs such as Python, JavaScript, shell scripts, or image-generation scripts to draw the APX art unless the user explicitly asks for programmatic generation or format conversion.
+- Author the artwork through APX JSON: palette symbols, rows, chunks, layers, and patch files.
+- For large artwork, use meaningful layers and hand-authored chunks for regions such as background, hair, face, clothing, eyes, highlights, shadows, props, and effects.
+- If a render looks weak, continue refining with APX edits or patch files before presenting it as complete.
+- After rendering, inspect the APX or output dimensions when exact size matters:
+
+```bash
+agentpaint inspect <file.apx>
 ```
 
 ## APX Rules
@@ -65,7 +82,7 @@ cargo run -- export-rgba <file.apx> --out <file.rgba.json>
 
 For a new sprite:
 
-1. Choose dimensions from the request. If unspecified, default to `16x16` for icons and `32x32` for character sprites.
+1. Use the exact dimensions from the request. If unspecified, default to `16x16` for icons and `32x32` for character sprites.
 2. Choose a style family from `references/pixel-art-style-guide.md`, then read the matching detailed style file under `references/styles/`.
 3. Build a small palette with `.` plus symbols that match the detailed style constraints.
 4. Create layers in the order recommended by the detailed style file.
@@ -78,12 +95,12 @@ For an edit:
 
 1. Inspect the existing APX first.
 2. Write a patch JSON with `set_palette`, `add_chunk`, `set_rows`, `replace_layer`, `add_layer`, `insert_layer`, `rename_layer`, `remove_layer`, `set_layer_visibility`, `set_layer_opacity`, `move_layer`, or `clear_layer`.
-3. Apply it with `cargo run -- patch`.
+3. Apply it with `agentpaint patch`.
 4. Validate and render after the edit.
 
 For layer-order edits:
 
-1. Inspect the current layer order with `cargo run -- inspect <file.apx>`.
+1. Inspect the current layer order with `agentpaint inspect <file.apx>`.
 2. Treat the listed order as top-to-bottom; `to_index: 0` means visual top. Inspect chunks include `x`, `y`, `width`, and `height`.
 3. Use `move_layer` with exactly one of `to_index`, `before`, or `after`.
 4. Prefer semantic targets, such as `{ "op": "move_layer", "layer": "effects", "before": "lighting" }` when effects should sit above lighting.
@@ -111,4 +128,4 @@ Patch style drift instead of rewriting the whole file. Examples: reduce colors f
 
 ## Reference
 
-Read `references/pixel-art-style-guide.md` first for shared principles and the style index. Then read the selected file under `references/styles/` for detailed style constraints. Read `references/apx-json-v0.md` only when detailed schema examples are needed. Use `schemas/apx-v0.schema.json` and `schemas/apx-patch-v0.schema.json` as machine-readable references when editing tools or prompts need schema guidance.
+Read bundled `references/pixel-art-style-guide.md` first for shared principles and the style index. Then read the selected file under bundled `references/styles/` for detailed style constraints. Read bundled `references/apx-json-v0.md` only when detailed schema examples are needed. Use bundled `references/schemas/apx-v0.schema.json` and `references/schemas/apx-patch-v0.schema.json` as machine-readable references when schema guidance is needed.

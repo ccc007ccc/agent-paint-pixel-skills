@@ -9,8 +9,8 @@ AgentPaint has a working v0.2 CLI foundation:
 - Photoshop-style top-to-bottom layer ordering, where `layers[0]` is the visual top layer.
 - `validate`, `inspect`, `render`, `patch`, and `export-rgba` commands.
 - APX project and APX patch JSON Schema files.
-- Unit tests. The old examples were removed and should be regenerated as a style/resolution matrix.
-- Repo-scoped Codex Skill for APX pixel-art generation and patch iteration.
+- Unit tests and a regenerated style/resolution example matrix.
+- Installable Codex Skill for APX pixel-art generation and patch iteration.
 - Install documentation and install scripts.
 
 ## v0.2 Completion Checklist
@@ -20,10 +20,10 @@ AgentPaint has a working v0.2 CLI foundation:
 - [x] Implement `agentpaint patch` for safe local APX edits.
 - [x] Add layer patch operations for insert, rename, visibility, opacity, move, clear, and removal.
 - [x] Add patch tests covering palette, layer, and chunk edits.
-- [ ] Regenerate examples with varied styles, aspect ratios, resolutions, and layer-control patches.
+- [x] Regenerate examples with varied styles, aspect ratios, resolutions, and layer-control patches.
 - [x] Add install scripts for Windows PowerShell and POSIX shells.
 - [x] Add a concise README with usage, format, and install entry points.
-- [x] Update the Codex Skill to use the new `patch` command and schema files.
+- [x] Update the Codex Skill to use the installed `agentpaint` command, the new `patch` command, and bundled schema files.
 - [x] Run `cargo fmt`, `cargo test`, schema-adjacent CLI checks, and skill validation.
 
 ## v0.2 Patch Format

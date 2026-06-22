@@ -11,25 +11,27 @@ Instead of asking an LLM to write raw RGBA arrays, AgentPaint uses APX JSON:
 
 ## Quick Start
 
+After installing, use the CLI from any workspace:
+
 ```bash
-cargo run -- --help
-cargo run -- validate <file.apx>
-cargo run -- inspect <file.apx>
-cargo run -- render <file.apx> --out <file.png>
-cargo run -- export-rgba <file.apx> --out <file.rgba.json>
+agentpaint --help
+agentpaint validate <file.apx>
+agentpaint inspect <file.apx>
+agentpaint render <file.apx> --out <file.png>
+agentpaint export-rgba <file.apx> --out <file.rgba.json>
 ```
 
 Apply a local edit:
 
 ```bash
-cargo run -- patch <file.apx> --patch <patch.json> --out <patched.apx>
-cargo run -- render <patched.apx> --out <patched.png>
+agentpaint patch <file.apx> --patch <patch.json> --out <patched.apx>
+agentpaint render <patched.apx> --out <patched.png>
 ```
 
 Adjust layer order without rewriting the APX:
 
 ```bash
-cargo run -- patch <file.apx> --patch <layer-order.patch.json> --out <reordered.apx>
+agentpaint patch <file.apx> --patch <layer-order.patch.json> --out <reordered.apx>
 ```
 
 Layer list order matches Photoshop: `layers[0]` is the visual top/front layer, and the last layer is the visual bottom/back layer.
@@ -97,7 +99,7 @@ The Codex Skill includes style-aware guidance for 1-bit, Game Boy, NES-inspired,
 
 ## Codex Skill
 
-The repo-scoped skill lives at:
+The source copy of the skill lives at:
 
 ```text
 .agents/skills/agent-paint-pixel-skills
@@ -113,4 +115,16 @@ Then invoke it from Codex with:
 
 ```text
 Use $agent-paint-pixel-skills to generate a 32x32 layered APX sprite and render it.
+```
+
+The installed skill does not require the AgentPaint source repository at runtime. It writes APX files in the user's current workspace and calls the installed `agentpaint` CLI from `PATH`.
+
+The skill is expected to honor requested image dimensions exactly. A `200x200` request must produce a `200x200` APX canvas and a `200x200` render. It should not draw a smaller image and resize it, and it should not write helper scripts to generate the artwork unless the user explicitly asks for programmatic generation.
+
+## Development
+
+When developing the CLI from this source repository, `cargo run -- <command>` is equivalent to running the installed `agentpaint` binary:
+
+```bash
+cargo run -- validate examples/one-bit-lighthouse-16.apx
 ```

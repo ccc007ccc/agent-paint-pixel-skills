@@ -10,9 +10,9 @@
 - [x] Implement `inspect` and `export-rgba` for agent/script-friendly inspection.
 - [x] Use Photoshop-style top-to-bottom layer ordering, with `layers[0]` as the visual top layer.
 - [x] Add focused unit tests for validation, rendering, patching, and layer behavior.
-- [ ] Regenerate the example suite after consistency checks.
+- [x] Regenerate the example suite after consistency checks.
 - [x] Add patch operations for layer insertion, renaming, visibility, opacity, movement, clearing, and removal.
-- [x] Create a repo-scoped Codex Skill that tells LLMs how to generate layered APX pixel art.
+- [x] Create an installable Codex Skill that tells LLMs how to generate layered APX pixel art with the installed `agentpaint` CLI.
 - [x] Verify with `cargo test`, `validate`, `render`, and `export-rgba`.
 
 ## APX JSON v0
@@ -85,9 +85,12 @@ agentpaint export-rgba <input.apx> --out <output.json>
 
 ## Skill Goal
 
-The repo skill should make Codex generate APX source files instead of raw RGBA arrays. The skill should instruct Codex to:
+The installed skill should make Codex generate APX source files instead of raw RGBA arrays. It should be usable from any user workspace after installation and should not require the AgentPaint source repository at runtime. The skill should instruct Codex to:
 
 - start with canvas, palette, and layer plan;
+- match the requested output dimensions exactly in the APX canvas;
+- avoid resizing or scaling as a substitute for drawing at the requested size;
+- avoid helper scripts for drawing unless the user explicitly asks for programmatic generation;
 - use short palette symbols and `.` for transparency;
 - use full rows for small sprites;
 - use chunks for larger images or local edits;

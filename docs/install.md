@@ -7,11 +7,13 @@ This guide installs:
 
 After installation, any CLI agent can call `agentpaint` from `PATH`, and Codex can use the skill from any repository.
 
+Runtime use does not require the AgentPaint source repository. The repository is only needed to install or update the CLI and skill from source.
+
 ## Prerequisites
 
 - Rust and Cargo installed.
 - Codex CLI installed if you want Codex to use the skill.
-- The AgentPaint repository available locally.
+- The AgentPaint repository available locally, only when installing from a local clone.
 
 Verify Rust:
 
@@ -106,7 +108,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 ## Install The Codex Skill
 
-AgentPaint includes a repo-scoped skill at:
+AgentPaint includes an installable skill source at:
 
 ```text
 .agents/skills/agent-paint-pixel-skills
@@ -162,7 +164,7 @@ Get-ChildItem -LiteralPath "$HOME\.agents\skills\agent-paint-pixel-skills"
 
 ## Verify End To End
 
-From the AgentPaint repository root:
+From any directory:
 
 ```bash
 agentpaint --help
@@ -174,6 +176,10 @@ Expected result:
 - The global skill folder contains `SKILL.md`.
 
 After examples are regenerated, also verify `validate`, `inspect`, `render`, `export-rgba`, and `patch` against one APX file.
+
+When Codex uses `$agent-paint-pixel-skills`, it should create APX files in the user's current workspace and run `agentpaint validate`, `agentpaint render`, and `agentpaint patch`. It should not search for the AgentPaint source repository unless the user is explicitly developing or reinstalling AgentPaint itself.
+
+For generation requests, the APX canvas must match the requested size exactly. The skill should not satisfy a requested size by drawing a smaller image and resizing it, and it should not write helper scripts to draw the art unless the user explicitly asks for programmatic generation.
 
 ## Update
 

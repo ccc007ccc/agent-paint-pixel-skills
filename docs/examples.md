@@ -28,8 +28,8 @@ All APX examples use Photoshop-style layer order: `layers[0]` is the visual top/
 Patch outputs used during verification:
 
 ```bash
-cargo run -- patch examples/horror-candle-32.apx --patch examples/horror-candle-local.patch.json --out examples/horror-candle-32-patched.apx
-cargo run -- patch examples/isometric-rooftop-garden-64.apx --patch examples/isometric-rooftop-layer-control.patch.json --out examples/isometric-rooftop-garden-64-reordered.apx
+agentpaint patch examples/horror-candle-32.apx --patch examples/horror-candle-local.patch.json --out examples/horror-candle-32-patched.apx
+agentpaint patch examples/isometric-rooftop-garden-64.apx --patch examples/isometric-rooftop-layer-control.patch.json --out examples/isometric-rooftop-garden-64-reordered.apx
 ```
 
 ## Validation Commands
@@ -37,12 +37,12 @@ cargo run -- patch examples/isometric-rooftop-garden-64.apx --patch examples/iso
 Validate and inspect every APX source:
 
 ```bash
-cargo run -- validate examples/<file>.apx
-cargo run -- inspect examples/<file>.apx
+agentpaint validate examples/<file>.apx
+agentpaint inspect examples/<file>.apx
 ```
 
 Render previews when visual inspection is needed:
 
 ```bash
-cargo run -- render examples/<file>.apx --out examples/<file>.png
+agentpaint render examples/<file>.apx --out examples/<file>.png
 ```
