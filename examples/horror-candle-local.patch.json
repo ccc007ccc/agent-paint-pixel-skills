@@ -1,0 +1,35 @@
+{
+  "operations": [
+    {
+      "op": "set_palette",
+      "symbol": "A",
+      "color": "#fff0a8"
+    },
+    {
+      "op": "add_chunk",
+      "layer": "effects",
+      "x": 10,
+      "y": 0,
+      "rows": [
+        "...FHHF...",
+        "..FHAAHF..",
+        ".FHAAAAHF.",
+        "FHAAFFAAHF",
+        ".FHAAAAHF.",
+        "..FHAAHF..",
+        "...FHHF..."
+      ]
+    },
+    {
+      "op": "add_chunk",
+      "layer": "eyes_or_focal_detail",
+      "x": 14,
+      "y": 19,
+      "rows": [
+        "A....A",
+        ".F..F.",
+        "..AA.."
+      ]
+    }
+  ]
+}

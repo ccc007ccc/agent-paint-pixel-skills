@@ -1,0 +1,1863 @@
+{
+  "canvas": {
+    "width": 128,
+    "height": 64
+  },
+  "palette": {
+    ".": "transparent",
+    "K": "#15131a",
+    "F": "#272331",
+    "M": "#4a4050",
+    "H": "#fff1bd",
+    "Y": "#ffd36b",
+    "O": "#f08a45",
+    "R": "#c85a52",
+    "P": "#7a4a62",
+    "B": "#2d395c",
+    "L": "#355b52",
+    "D": "#1c2b31",
+    "C": "#6c786d"
+  },
+  "layers": [
+    {
+      "name": "glass_reflections",
+      "opacity": 0.55,
+      "chunks": [
+        {
+          "x": 18,
+          "y": 12,
+          "rows": [
+            "HHHHH.................................",
+            ".....HHHHH............................",
+            "..........HHHHH.......................",
+            "...............HHHHH..................",
+            "....................HHHHH.............",
+            ".........................HHHHH........",
+            "..............................HHHHH...",
+            "...................................HHH"
+          ]
+        },
+        {
+          "x": 77,
+          "y": 10,
+          "rows": [
+            "YYYY....................",
+            "....YYYY................",
+            "........YYYY............",
+            "............YYYY........",
+            "................YYYY....",
+            "....................YYYY"
+          ]
+        },
+        {
+          "x": 20,
+          "y": 16,
+          "rows": [
+            "H.....H.....H.....H.....H.....H...",
+            "..................................",
+            ".................................."
+          ]
+        },
+        {
+          "x": 73,
+          "y": 18,
+          "rows": [
+            "H................H.............",
+            "........H................H.....",
+            "................H..............",
+            ".......H................H......"
+          ]
+        },
+        {
+          "x": 16,
+          "y": 29,
+          "rows": [
+            "H..................................................................................H..............",
+            "...........................................................................H......................",
+            "...................................................................H..............................",
+            "...........................................................H......................................",
+            "...................................................H..............................................",
+            "...........................................H......................................................",
+            "...................................H..............................................................",
+            "...........................H......................................................................",
+            "...................H..............................................................................",
+            "...........H..................................................................................H...",
+            "...H..................................................................................H...........",
+            "..............................................................................H..................."
+          ]
+        },
+        {
+          "x": 32,
+          "y": 9,
+          "rows": [
+            ".......",
+            "..H....",
+            ".HHH...",
+            "..H....",
+            "......."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "window_frame_highlights",
+      "chunks": [
+        {
+          "x": 14,
+          "y": 7,
+          "rows": [
+            "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
+          ]
+        },
+        {
+          "x": 14,
+          "y": 52,
+          "rows": [
+            "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
+          ]
+        },
+        {
+          "x": 14,
+          "y": 9,
+          "rows": [
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H",
+            "H"
+          ]
+        },
+        {
+          "x": 114,
+          "y": 9,
+          "rows": [
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M"
+          ]
+        },
+        {
+          "x": 62,
+          "y": 7,
+          "rows": [
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M",
+            "M"
+          ]
+        },
+        {
+          "x": 91,
+          "y": 6,
+          "rows": [
+            ".HH.HH.HH.HH.HH.HH",
+            "HH.HH.HH.HH.HH.HH."
+          ]
+        },
+        {
+          "x": 45,
+          "y": 52,
+          "rows": [
+            "H...H...H...H...H...",
+            "H...H...H...H...H..."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cabin_foreground_details",
+      "chunks": [
+        {
+          "x": 15,
+          "y": 54,
+          "rows": [
+            "KKKK......................................",
+            "KKKKFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK"
+          ]
+        },
+        {
+          "x": 78,
+          "y": 55,
+          "rows": [
+            ".F.F.F.F.F.F.F.F.F.F.F.F.F.F.F.F.F.F.F",
+            "F.F.F.F.F.F.F.F.F.F.F.F.F.F.F.F.F.F.F.",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK"
+          ]
+        },
+        {
+          "x": 22,
+          "y": 47,
+          "rows": [
+            ".........",
+            ".KKKKKKK.",
+            "..KKKKK..",
+            "M.KKKKK.M",
+            "M.KKKKK.M",
+            "M.KKKKK.M",
+            "M.KKKKK.M",
+            "..KKKKK..",
+            "..KKKKK.."
+          ]
+        },
+        {
+          "x": 30,
+          "y": 49,
+          "rows": [
+            "........",
+            ".....MMM",
+            ".....MMM",
+            "........"
+          ]
+        },
+        {
+          "x": 109,
+          "y": 28,
+          "rows": [
+            ".MMMMM.",
+            ".MMMMM.",
+            "M.....M",
+            "M.....M",
+            "M.....M",
+            "M.....M",
+            ".MMMMM.",
+            ".MMMMM."
+          ]
+        },
+        {
+          "x": 111,
+          "y": 31,
+          "rows": [
+            "HHH",
+            "HHH"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "window_frame",
+      "chunks": [
+        {
+          "x": 0,
+          "y": 0,
+          "rows": [
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK"
+          ]
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "rows": [
+            "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+            "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+            "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+          ]
+        },
+        {
+          "x": 0,
+          "y": 57,
+          "rows": [
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+            "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK"
+          ]
+        },
+        {
+          "x": 0,
+          "y": 53,
+          "rows": [
+            "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+            "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+            "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+            "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"
+          ]
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "rows": [
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK"
+          ]
+        },
+        {
+          "x": 9,
+          "y": 4,
+          "rows": [
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF"
+          ]
+        },
+        {
+          "x": 119,
+          "y": 0,
+          "rows": [
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK",
+            "KKKKKKKKK"
+          ]
+        },
+        {
+          "x": 115,
+          "y": 4,
+          "rows": [
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF",
+            "FFFF"
+          ]
+        },
+        {
+          "x": 58,
+          "y": 4,
+          "rows": [
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF",
+            "FFFFF"
+          ]
+        },
+        {
+          "x": 60,
+          "y": 4,
+          "rows": [
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K",
+            "K"
+          ]
+        },
+        {
+          "x": 13,
+          "y": 7,
+          "rows": [
+            "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+            "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
+          ]
+        },
+        {
+          "x": 13,
+          "y": 51,
+          "rows": [
+            "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+            "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM"
+          ]
+        },
+        {
+          "x": 13,
+          "y": 9,
+          "rows": [
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM"
+          ]
+        },
+        {
+          "x": 113,
+          "y": 9,
+          "rows": [
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM",
+            "MM"
+          ]
+        },
+        {
+          "x": 9,
+          "y": 4,
+          "rows": [
+            "KKKKK...",
+            "KKKK....",
+            "KKK.....",
+            "KK......",
+            "K.......",
+            "........",
+            "........",
+            "........"
+          ]
+        },
+        {
+          "x": 111,
+          "y": 4,
+          "rows": [
+            "...KKKKK",
+            "....KKKK",
+            ".....KKK",
+            "......KK",
+            ".......K",
+            "........",
+            "........",
+            "........"
+          ]
+        },
+        {
+          "x": 9,
+          "y": 49,
+          "rows": [
+            "........",
+            "........",
+            "........",
+            "K.......",
+            "KK......",
+            "KKK.....",
+            "KKKK....",
+            "KKKKK..."
+          ]
+        },
+        {
+          "x": 111,
+          "y": 49,
+          "rows": [
+            "........",
+            "........",
+            "........",
+            ".......K",
+            "......KK",
+            ".....KKK",
+            "....KKKK",
+            "...KKKKK"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "motion_blur_streaks",
+      "opacity": 0.85,
+      "chunks": [
+        {
+          "x": 10,
+          "y": 50,
+          "rows": [
+            "..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..C",
+            "..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..CCC..C"
+          ]
+        },
+        {
+          "x": 10,
+          "y": 53,
+          "rows": [
+            ".DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD",
+            ".DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD.DDD"
+          ]
+        },
+        {
+          "x": 12,
+          "y": 56,
+          "rows": [
+            ".KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK..",
+            ".KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK....KKK.."
+          ]
+        },
+        {
+          "x": 36,
+          "y": 47,
+          "rows": [
+            ".LL.LL.LL.LL.LL.LL.LL.LL.LL.LL.LL.LL.LL.LL.L",
+            ".LL.LL.LL.LL.LL.LL.LL.LL.LL.LL.LL.LL.LL.LL.L"
+          ]
+        },
+        {
+          "x": 82,
+          "y": 49,
+          "rows": [
+            "O...O...O...O...O...O...O...O.",
+            "O...O...O...O...O...O...O...O."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "near_tree_silhouettes",
+      "chunks": [
+        {
+          "x": 11,
+          "y": 39,
+          "rows": [
+            ".......DD.DD.DD.DD.......................................................................D.DD.DD.DD.DD......",
+            "......DD.DD.DD.DD.D.....................................................................D.DD.DD.DD.DD.D.....",
+            "......D.DD.DD.DD.DD......................................................................DD.DD.DD.DD.DD.....",
+            ".......DD.DD.DD.DD......................................................................DD.DD.DD.DD.DD.D....",
+            "......DD.DD.DD.DD.D....................................................................DD.DD.DD.DD.DD.DD....",
+            "....KKD.DD.DD.DD.DKK...................................................................DKKD.DD.DD.DDKKD.....",
+            "....KK.DD.DD.DD.DDKK....................................................................KK.DD.DD.DD.KK.D....",
+            "....KKDD.DD.DD.DD.KK...................................................................DKKDD.DD.DD.DKKDD....",
+            "....KK..DD.DD.DD.DKK....................................................................KKD.DD.DD.DDKKD.....",
+            "....KK..D.DD.DD.D.KK....................................................................KK.DD.DD.DD.KK......",
+            "....KK...DD.DD.D..KK....................................................................KKDD.DD.DD.DKK......",
+            "....KK............KK....................................................................KKD.DD.DD.DDKK......",
+            "....KK............KK....................................................................KK.DD.DD.DD.KK......",
+            "....KK............KK....................................................................KK...DD.DD..KK......",
+            "..D.KKD...D...D...KK..D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D.KKD...D...D.KKD...D.",
+            ".D..KK...D...D...DKK.D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D..KK...D...D..KK...D..",
+            "D...KK..D...D...D.KKD...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...KK..D...D...KK..D...",
+            "...DKK.D...D...D..KK...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...DKK.D...D...DKK.D...D",
+            "..D.KKD...D...D...KK..D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D.KKD...D...D.KKD...D."
+          ]
+        },
+        {
+          "x": 104,
+          "y": 31,
+          "rows": [
+            ".KK..",
+            ".KK..",
+            "KKKKK",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            "KKKKK",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK..",
+            ".KK.."
+          ]
+        },
+        {
+          "x": 97,
+          "y": 36,
+          "rows": [
+            "K.K.K.K.K.K.K.K.K.K.K.K",
+            "......................."
+          ]
+        },
+        {
+          "x": 25,
+          "y": 42,
+          "rows": [
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD.",
+            ".DD."
+          ]
+        },
+        {
+          "x": 23,
+          "y": 44,
+          "rows": [
+            "D.D.D.D.D.D.",
+            ".D.D.D.D.D.D"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "distant_landscape",
+      "chunks": [
+        {
+          "x": 9,
+          "y": 33,
+          "rows": [
+            ".................................................................................L............................",
+            ".............................................................................CLLLL............................",
+            "..........................................................................LLCLLLLLCLLLLLCLL...................",
+            "...................................LLLLCLLLLLCL............LL....LLLLCLLLLLCLLLLLCLLLLLCLLLLLCL...............",
+            "................................CLLLLLCLLLLLCLLLLLC........LLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLL.............",
+            "...........................LLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLL........",
+            "CL......................CLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCL......",
+            "LLLLL.................LCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLL...",
+            "LLLLCLLL..........LLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLL",
+            "LLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLDLLLLLCLLLLLCLLLLLCLLLLLCLLLL",
+            "LLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLDDDDDLLLLCLLLLLCLLLLLCLLLLLCLLLLL",
+            "LCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCDDDDDDDDDDDDDDDDDCLLLLLCLLLLLCLLLLLC",
+            "CLLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLLLDDDDDDDDDDDDLCLLLLLCLLLLDDLLLLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDLCLLLLLCLLLLLCL",
+            "LLLLLCLLLLLCLLLLLCLLLLLCLLLLLCLLDDDDDDDDDDDDDDDDDDDLLCLLLLLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDLLLLCLLLLLCLL",
+            "LLLLCLLLLLCLLLLLCLLLLLCLLLLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDLLLLCLLL",
+            "DDLCLLLLLCLLLLLCLLLLLCLLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDLCLLLL",
+            "DDDDDLLLCLLLLLCLLLLLCLDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDLLL"
+          ]
+        },
+        {
+          "x": 8,
+          "y": 46,
+          "rows": [
+            "D...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...",
+            "D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...DD...D...",
+            "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+            "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+            "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+            "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+          ]
+        },
+        {
+          "x": 18,
+          "y": 44,
+          "rows": [
+            ".....HH.................H......................HH.....................HH..............",
+            "......................................................................................"
+          ]
+        },
+        {
+          "x": 12,
+          "y": 51,
+          "rows": [
+            "LCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCC",
+            "CCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCC",
+            "CCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCLCCCCL"
+          ]
+        },
+        {
+          "x": 12,
+          "y": 54,
+          "rows": [
+            "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+            "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+            "D.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.",
+            ".DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.DD.D"
+          ]
+        },
+        {
+          "x": 18,
+          "y": 55,
+          "rows": [
+            ".OO.OO.OO.OO.OO.OO.OO.OO.OO.OO.OO.O",
+            "R...R...R...R...R...R...R...R...R..",
+            "..................................."
+          ]
+        },
+        {
+          "x": 70,
+          "y": 53,
+          "rows": [
+            "Y....Y....Y....Y....Y....Y....Y....Y..",
+            "....O.....O.....O.....O.....O.....O...",
+            "......................................",
+            "......................................"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sun_and_glow",
+      "chunks": [
+        {
+          "x": 67,
+          "y": 22,
+          "rows": [
+            ".............................",
+            ".............YYY.............",
+            ".......OOOYYYYYYYYYOOO.......",
+            "......OOOYYYYYYYYYYYOOO......",
+            "......OOYYYYYYYYYYYYYOO......",
+            ".....OOYYYYYYHHHYYYYYYOO.....",
+            ".....OOYYYYYHHHHHYYYYYOO.....",
+            ".....OOYYYYHHHHHHHYYYYOO.....",
+            ".....OYYYYHHHHHHHHHYYYYO.....",
+            "....OOYYYYHHHHHHHHHYYYYOO....",
+            ".....OYYYYHHHHHHHHHYYYYO.....",
+            ".....OOYYYYHHHHHHHYYYYOO.....",
+            ".....OOYYYYYHHHHHYYYYYOO.....",
+            ".....OOYYYYYYHHHYYYYYYOO.....",
+            "......OOYYYYYYYYYYYYYOO......",
+            "......OOOYYYYYYYYYYYOOO......",
+            ".......OOOYYYYYYYYYOOO.......",
+            "........OOOOOYYYOOOOO........",
+            "..........OOOOOOOOO.........."
+          ]
+        },
+        {
+          "x": 51,
+          "y": 21,
+          "rows": [
+            "YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...Y",
+            "Y...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY",
+            "...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY.",
+            "..YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY..",
+            ".YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY...YY..."
+          ]
+        },
+        {
+          "x": 45,
+          "y": 29,
+          "rows": [
+            "OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.",
+            "...OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....",
+            "O.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO..",
+            "..OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....O",
+            ".....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO...",
+            ".OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO.....OO"
+          ]
+        },
+        {
+          "x": 56,
+          "y": 37,
+          "rows": [
+            "H.....H.....H.....H.....H.....H.....H.....H.....H..",
+            ".....H.....H.....H.....H.....H.....H.....H.....H...",
+            "....H.....H.....H.....H.....H.....H.....H.....H....",
+            "...H.....H.....H.....H.....H.....H.....H.....H....."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "dither_texture",
+      "opacity": 0.8,
+      "chunks": [
+        {
+          "x": 10,
+          "y": 5,
+          "rows": [
+            "P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P..",
+            "...P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....",
+            ".P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P.",
+            "....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P...",
+            "..P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P",
+            "P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P..",
+            "...P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....",
+            ".P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P.",
+            "....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P...",
+            "..P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P....P"
+          ]
+        },
+        {
+          "x": 10,
+          "y": 12,
+          "rows": [
+            "B......B......B......B......B......B......B......B......B......B......B......B......B......B......B......B..",
+            "...B......B......B......B......B......B......B......B......B......B......B......B......B......B......B......",
+            "......B......B......B......B......B......B......B......B......B......B......B......B......B......B......B...",
+            "..B......B......B......B......B......B......B......B......B......B......B......B......B......B......B......B",
+            ".....B......B......B......B......B......B......B......B......B......B......B......B......B......B......B....",
+            ".B......B......B......B......B......B......B......B......B......B......B......B......B......B......B......B.",
+            "....B......B......B......B......B......B......B......B......B......B......B......B......B......B......B.....",
+            "B......B......B......B......B......B......B......B......B......B......B......B......B......B......B......B.."
+          ]
+        },
+        {
+          "x": 10,
+          "y": 17,
+          "rows": [
+            "O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..",
+            "..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O",
+            ".O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O.",
+            "O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..",
+            "..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O",
+            ".O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O.",
+            "O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..",
+            "..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O",
+            ".O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O.",
+            "O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..",
+            "..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O..O"
+          ]
+        },
+        {
+          "x": 10,
+          "y": 24,
+          "rows": [
+            "Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.",
+            "Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.",
+            "............................................................................................................",
+            ".Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y",
+            ".Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y",
+            "............................................................................................................",
+            "Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.",
+            "Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.",
+            "............................................................................................................",
+            ".Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y.Y"
+          ]
+        },
+        {
+          "x": 10,
+          "y": 31,
+          "rows": [
+            "H..........H..........H..........H..........H..........H..........H..........H..........H..........H........",
+            "........H..........H..........H..........H..........H..........H..........H..........H..........H..........H",
+            ".....H..........H..........H..........H..........H..........H..........H..........H..........H..........H...",
+            "..H..........H..........H..........H..........H..........H..........H..........H..........H..........H......",
+            "..........H..........H..........H..........H..........H..........H..........H..........H..........H.........",
+            ".......H..........H..........H..........H..........H..........H..........H..........H..........H..........H.",
+            "....H..........H..........H..........H..........H..........H..........H..........H..........H..........H....",
+            ".H..........H..........H..........H..........H..........H..........H..........H..........H..........H......."
+          ]
+        },
+        {
+          "x": 10,
+          "y": 39,
+          "rows": [
+            "R.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......R",
+            "....RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR...",
+            "RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......",
+            ".....RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR..",
+            ".RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR......",
+            "......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.",
+            "..RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.....",
+            ".......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR",
+            "...RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR.......RR...."
+          ]
+        },
+        {
+          "x": 12,
+          "y": 50,
+          "rows": [
+            "D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...",
+            "...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D",
+            "..D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D.",
+            ".D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D..",
+            "D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...",
+            "...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D",
+            "..D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D...D."
+          ]
+        },
+        {
+          "x": 14,
+          "y": 8,
+          "rows": [
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P..",
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P..",
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P.."
+          ]
+        },
+        {
+          "x": 42,
+          "y": 8,
+          "rows": [
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P..",
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P..",
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P.."
+          ]
+        },
+        {
+          "x": 70,
+          "y": 8,
+          "rows": [
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P..",
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P..",
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P.."
+          ]
+        },
+        {
+          "x": 98,
+          "y": 8,
+          "rows": [
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P..",
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P..",
+            "..P...P...P...P...",
+            ".P...P...P...P...P",
+            "P...P...P...P...P.",
+            "...P...P...P...P.."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sky_bands",
+      "chunks": [
+        {
+          "x": 0,
+          "y": 0,
+          "rows": [
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+          ]
+        },
+        {
+          "x": 32,
+          "y": 0,
+          "rows": [
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+          ]
+        },
+        {
+          "x": 64,
+          "y": 0,
+          "rows": [
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+          ]
+        },
+        {
+          "x": 96,
+          "y": 0,
+          "rows": [
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+          ]
+        },
+        {
+          "x": 0,
+          "y": 7,
+          "rows": [
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+          ]
+        },
+        {
+          "x": 32,
+          "y": 7,
+          "rows": [
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+          ]
+        },
+        {
+          "x": 64,
+          "y": 7,
+          "rows": [
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+          ]
+        },
+        {
+          "x": 96,
+          "y": 7,
+          "rows": [
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+            "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP"
+          ]
+        },
+        {
+          "x": 0,
+          "y": 15,
+          "rows": [
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+          ]
+        },
+        {
+          "x": 32,
+          "y": 15,
+          "rows": [
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+          ]
+        },
+        {
+          "x": 64,
+          "y": 15,
+          "rows": [
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+          ]
+        },
+        {
+          "x": 96,
+          "y": 15,
+          "rows": [
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+          ]
+        },
+        {
+          "x": 0,
+          "y": 23,
+          "rows": [
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+          ]
+        },
+        {
+          "x": 32,
+          "y": 23,
+          "rows": [
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+          ]
+        },
+        {
+          "x": 64,
+          "y": 23,
+          "rows": [
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+          ]
+        },
+        {
+          "x": 96,
+          "y": 23,
+          "rows": [
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+          ]
+        },
+        {
+          "x": 0,
+          "y": 32,
+          "rows": [
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
+          ]
+        },
+        {
+          "x": 32,
+          "y": 32,
+          "rows": [
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
+          ]
+        },
+        {
+          "x": 64,
+          "y": 32,
+          "rows": [
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
+          ]
+        },
+        {
+          "x": 96,
+          "y": 32,
+          "rows": [
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+            "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
+          ]
+        },
+        {
+          "x": 0,
+          "y": 41,
+          "rows": [
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+          ]
+        },
+        {
+          "x": 32,
+          "y": 41,
+          "rows": [
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+          ]
+        },
+        {
+          "x": 64,
+          "y": 41,
+          "rows": [
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+          ]
+        },
+        {
+          "x": 96,
+          "y": 41,
+          "rows": [
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+            "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
+          ]
+        },
+        {
+          "x": 0,
+          "y": 51,
+          "rows": [
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+          ]
+        },
+        {
+          "x": 32,
+          "y": 51,
+          "rows": [
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+          ]
+        },
+        {
+          "x": 64,
+          "y": 51,
+          "rows": [
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+          ]
+        },
+        {
+          "x": 96,
+          "y": 51,
+          "rows": [
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+            "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR"
+          ]
+        }
+      ]
+    }
+  ]
+}

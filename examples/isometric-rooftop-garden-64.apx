@@ -1,0 +1,346 @@
+{
+  "canvas": { "width": 64, "height": 64 },
+  "palette": {
+    ".": "transparent",
+    "o": "#263238",
+    "O": "#40545a",
+    "s": "#202f3288",
+    "t": "#839598",
+    "u": "#93a5a6",
+    "v": "#aab8b6",
+    "l": "#637a80",
+    "L": "#789096",
+    "r": "#4d646d",
+    "R": "#5f7780",
+    "d": "#3d5158",
+    "b": "#5c3b2e",
+    "B": "#80543e",
+    "p": "#a86d4d",
+    "e": "#3b2b25",
+    "g": "#2f6f45",
+    "G": "#45995b",
+    "h": "#76c86e",
+    "f": "#e86aa0",
+    "y": "#f1c453",
+    "c": "#2f6c88",
+    "C": "#55a4b8",
+    "w": "#d7f4ef",
+    "m": "#c7c3ad",
+    "M": "#f0ead0"
+  },
+  "layers": [
+    {
+      "name": "details",
+      "chunks": [
+        { "x": 17, "y": 22, "rows": ["y"] },
+        { "x": 20, "y": 23, "rows": ["f"] },
+        { "x": 23, "y": 24, "rows": ["y"] },
+        { "x": 39, "y": 25, "rows": ["f"] },
+        { "x": 43, "y": 26, "rows": ["y"] },
+        { "x": 47, "y": 27, "rows": ["f"] },
+        { "x": 27, "y": 31, "rows": ["O"] },
+        { "x": 31, "y": 32, "rows": ["O"] },
+        { "x": 35, "y": 31, "rows": ["O"] },
+        { "x": 15, "y": 28, "rows": ["e..e"] },
+        { "x": 40, "y": 30, "rows": ["e...e"] },
+        { "x": 48, "y": 33, "rows": ["oo"] },
+        { "x": 51, "y": 34, "rows": ["o"] }
+      ]
+    },
+    {
+      "name": "highlights",
+      "chunks": [
+        { "x": 25, "y": 18, "rows": ["ww"] },
+        { "x": 27, "y": 19, "rows": ["w...w"] },
+        { "x": 29, "y": 20, "rows": ["w.....w"] },
+        { "x": 15, "y": 25, "rows": [".pppppppp.."] },
+        { "x": 39, "y": 27, "rows": [".pppppppppp."] },
+        { "x": 11, "y": 24, "rows": ["vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv"] },
+        { "x": 21, "y": 18, "rows": ["vv"] },
+        { "x": 43, "y": 19, "rows": ["vv"] }
+      ]
+    },
+    {
+      "name": "vegetation_highlights",
+      "chunks": [
+        { "x": 16, "y": 21, "rows": ["h.h.h"] },
+        { "x": 19, "y": 22, "rows": ["h.hh"] },
+        { "x": 22, "y": 23, "rows": ["hh.h"] },
+        { "x": 38, "y": 24, "rows": ["h.hh.h"] },
+        { "x": 42, "y": 25, "rows": ["hh.hh"] },
+        { "x": 46, "y": 26, "rows": ["h.h"] }
+      ]
+    },
+    {
+      "name": "skylight_glass",
+      "chunks": [
+        {
+          "x": 24,
+          "y": 18,
+          "rows": [
+            "...cc...",
+            ".cCCCCc.",
+            "cCCCCCCc",
+            ".cCCcCc.",
+            "...cc..."
+          ]
+        },
+        { "x": 27, "y": 20, "rows": ["CCww"] }
+      ]
+    },
+    {
+      "name": "skylight_frame",
+      "chunks": [
+        { "x": 27, "y": 17, "rows": ["oooo"] },
+        { "x": 25, "y": 18, "rows": ["oo....oo"] },
+        { "x": 23, "y": 19, "rows": ["oo........oo"] },
+        { "x": 23, "y": 20, "rows": ["oo........oo"] },
+        { "x": 25, "y": 21, "rows": ["oo....oo"] },
+        { "x": 27, "y": 22, "rows": ["oooo"] },
+        { "x": 29, "y": 18, "rows": ["m..m"] },
+        { "x": 28, "y": 20, "rows": ["m....m"] }
+      ]
+    },
+    {
+      "name": "vegetation",
+      "chunks": [
+        {
+          "x": 14,
+          "y": 20,
+          "rows": [
+            "..gGgGg...",
+            ".GGgGGgG..",
+            "gGGGGgGGg.",
+            ".GgGGGGg.."
+          ]
+        },
+        {
+          "x": 37,
+          "y": 23,
+          "rows": [
+            "..gGGgGG...",
+            ".GGgGGgGG..",
+            "gGGGGGGgG..",
+            ".GgGGgGG..."
+          ]
+        },
+        {
+          "x": 28,
+          "y": 29,
+          "rows": [
+            ".gG.",
+            "GGGg",
+            ".Gg."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "planter_rims",
+      "chunks": [
+        { "x": 13, "y": 24, "rows": ["ooppppppppoo"] },
+        { "x": 12, "y": 25, "rows": ["oo........oo"] },
+        { "x": 14, "y": 27, "rows": ["oBBBBBBBBBo"] },
+        { "x": 37, "y": 26, "rows": ["ooppppppppppoo"] },
+        { "x": 36, "y": 27, "rows": ["oo..........oo"] },
+        { "x": 38, "y": 29, "rows": ["oBBBBBBBBBBBo"] }
+      ]
+    },
+    {
+      "name": "planter_boxes",
+      "chunks": [
+        {
+          "x": 12,
+          "y": 24,
+          "rows": [
+            ".BBBBBBBBBB.",
+            "BeeeeeeeeeeB",
+            "bBBBBBBBBBBb",
+            ".bbbbbbbbbb."
+          ]
+        },
+        {
+          "x": 36,
+          "y": 26,
+          "rows": [
+            ".BBBBBBBBBBBB.",
+            "BeeeeeeeeeeeeB",
+            "bBBBBBBBBBBBBb",
+            ".bbbbbbbbbbbb."
+          ]
+        },
+        {
+          "x": 27,
+          "y": 31,
+          "rows": [
+            "BeeeB",
+            "bBBBb",
+            ".bbb."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "edge_lines",
+      "chunks": [
+        { "x": 31, "y": 12, "rows": ["oo"] },
+        { "x": 29, "y": 13, "rows": ["oo....oo"] },
+        { "x": 27, "y": 14, "rows": ["oo........oo"] },
+        { "x": 25, "y": 15, "rows": ["oo............oo"] },
+        { "x": 23, "y": 16, "rows": ["oo................oo"] },
+        { "x": 21, "y": 17, "rows": ["oo....................oo"] },
+        { "x": 19, "y": 18, "rows": ["oo........................oo"] },
+        { "x": 17, "y": 19, "rows": ["oo............................oo"] },
+        { "x": 15, "y": 20, "rows": ["oo................................oo"] },
+        { "x": 13, "y": 21, "rows": ["oo....................................oo"] },
+        { "x": 11, "y": 22, "rows": ["oo........................................oo"] },
+        { "x": 9, "y": 23, "rows": ["oo............................................oo"] },
+        { "x": 7, "y": 24, "rows": ["oo................................................oo"] },
+        { "x": 5, "y": 25, "rows": ["oo....................................................oo"] },
+        { "x": 7, "y": 26, "rows": ["oo................................................oo"] },
+        { "x": 9, "y": 27, "rows": ["oo............................................oo"] },
+        { "x": 11, "y": 28, "rows": ["oo........................................oo"] },
+        { "x": 13, "y": 29, "rows": ["oo....................................oo"] },
+        { "x": 15, "y": 30, "rows": ["oo................................oo"] },
+        { "x": 17, "y": 31, "rows": ["oo............................oo"] },
+        { "x": 19, "y": 32, "rows": ["oo........................oo"] },
+        { "x": 21, "y": 33, "rows": ["oo....................oo"] },
+        { "x": 23, "y": 34, "rows": ["oo................oo"] },
+        { "x": 25, "y": 35, "rows": ["oo............oo"] },
+        { "x": 27, "y": 36, "rows": ["oo........oo"] },
+        { "x": 29, "y": 37, "rows": ["oo....oo"] },
+        { "x": 31, "y": 38, "rows": ["oo"] },
+        { "x": 5, "y": 33, "rows": ["oo"] },
+        { "x": 7, "y": 34, "rows": ["oo"] },
+        { "x": 9, "y": 35, "rows": ["oo"] },
+        { "x": 11, "y": 36, "rows": ["oo"] },
+        { "x": 13, "y": 37, "rows": ["oo"] },
+        { "x": 15, "y": 38, "rows": ["oo"] },
+        { "x": 17, "y": 39, "rows": ["oo"] },
+        { "x": 19, "y": 40, "rows": ["oo"] },
+        { "x": 21, "y": 41, "rows": ["oo"] },
+        { "x": 23, "y": 42, "rows": ["oo"] },
+        { "x": 25, "y": 43, "rows": ["oo"] },
+        { "x": 27, "y": 44, "rows": ["oo"] },
+        { "x": 29, "y": 45, "rows": ["oooooo"] },
+        { "x": 57, "y": 33, "rows": ["oo"] },
+        { "x": 55, "y": 34, "rows": ["oo"] },
+        { "x": 53, "y": 35, "rows": ["oo"] },
+        { "x": 51, "y": 36, "rows": ["oo"] },
+        { "x": 49, "y": 37, "rows": ["oo"] },
+        { "x": 47, "y": 38, "rows": ["oo"] },
+        { "x": 45, "y": 39, "rows": ["oo"] },
+        { "x": 43, "y": 40, "rows": ["oo"] },
+        { "x": 41, "y": 41, "rows": ["oo"] },
+        { "x": 39, "y": 42, "rows": ["oo"] },
+        { "x": 37, "y": 43, "rows": ["oo"] },
+        { "x": 35, "y": 44, "rows": ["oo"] },
+        { "x": 31, "y": 45, "rows": ["oooooo"] }
+      ]
+    },
+    {
+      "name": "roof_texture",
+      "chunks": [
+        { "x": 23, "y": 17, "rows": ["u.u.u.u.u.u.u.u."] },
+        { "x": 17, "y": 20, "rows": ["u..u..u..u..u..u..u.."] },
+        { "x": 11, "y": 23, "rows": ["u...u...u...u...u...u...u...u..."] },
+        { "x": 13, "y": 27, "rows": ["t..u..t..u..t..u..t..u..t..u"] },
+        { "x": 19, "y": 32, "rows": ["u...u...u...u...u"] },
+        { "x": 29, "y": 35, "rows": ["u..u"] }
+      ]
+    },
+    {
+      "name": "roof_top",
+      "chunks": [
+        { "x": 31, "y": 12, "rows": ["tt"] },
+        { "x": 29, "y": 13, "rows": ["tttttt"] },
+        { "x": 27, "y": 14, "rows": ["tttttttttt"] },
+        { "x": 25, "y": 15, "rows": ["tttttttttttttt"] },
+        { "x": 23, "y": 16, "rows": ["tttttttttttttttttt"] },
+        { "x": 21, "y": 17, "rows": ["tttttttttttttttttttttt"] },
+        { "x": 19, "y": 18, "rows": ["tttttttttttttttttttttttttt"] },
+        { "x": 17, "y": 19, "rows": ["tttttttttttttttttttttttttttttt"] },
+        { "x": 15, "y": 20, "rows": ["tttttttttttttttttttttttttttttttttt"] },
+        { "x": 13, "y": 21, "rows": ["tttttttttttttttttttttttttttttttttttttt"] },
+        { "x": 11, "y": 22, "rows": ["tttttttttttttttttttttttttttttttttttttttttt"] },
+        { "x": 9, "y": 23, "rows": ["tttttttttttttttttttttttttttttttttttttttttttttt"] },
+        { "x": 7, "y": 24, "rows": ["tttttttttttttttttttttttttttttttttttttttttttttttttt"] },
+        { "x": 5, "y": 25, "rows": ["tttttttttttttttttttttttttttttttttttttttttttttttttttttt"] },
+        { "x": 7, "y": 26, "rows": ["tttttttttttttttttttttttttttttttttttttttttttttttttt"] },
+        { "x": 9, "y": 27, "rows": ["tttttttttttttttttttttttttttttttttttttttttttttt"] },
+        { "x": 11, "y": 28, "rows": ["tttttttttttttttttttttttttttttttttttttttttt"] },
+        { "x": 13, "y": 29, "rows": ["tttttttttttttttttttttttttttttttttttttt"] },
+        { "x": 15, "y": 30, "rows": ["tttttttttttttttttttttttttttttttttt"] },
+        { "x": 17, "y": 31, "rows": ["tttttttttttttttttttttttttttttt"] },
+        { "x": 19, "y": 32, "rows": ["tttttttttttttttttttttttttt"] },
+        { "x": 21, "y": 33, "rows": ["tttttttttttttttttttttt"] },
+        { "x": 23, "y": 34, "rows": ["tttttttttttttttttt"] },
+        { "x": 25, "y": 35, "rows": ["tttttttttttttt"] },
+        { "x": 27, "y": 36, "rows": ["tttttttttt"] },
+        { "x": 29, "y": 37, "rows": ["tttttt"] },
+        { "x": 31, "y": 38, "rows": ["tt"] }
+      ]
+    },
+    {
+      "name": "right_face",
+      "chunks": [
+        { "x": 57, "y": 26, "rows": ["rr"] },
+        { "x": 55, "y": 27, "rows": ["rrrr"] },
+        { "x": 53, "y": 28, "rows": ["rrrrrr"] },
+        { "x": 51, "y": 29, "rows": ["rrrrrrrr"] },
+        { "x": 49, "y": 30, "rows": ["rrrrrrrrrr"] },
+        { "x": 47, "y": 31, "rows": ["rrrrrrrrrrrr"] },
+        { "x": 45, "y": 32, "rows": ["rrrrrrrrrrrrrr"] },
+        { "x": 43, "y": 33, "rows": ["rrrrrrrrrrrrrrrr"] },
+        { "x": 41, "y": 34, "rows": ["rrrrrrrrrrrrrrrrrr"] },
+        { "x": 39, "y": 35, "rows": ["rrrrrrrrrrrrrrrrrrrr"] },
+        { "x": 37, "y": 36, "rows": ["rrrrrrrrrrrrrrrrrrrrrr"] },
+        { "x": 35, "y": 37, "rows": ["rrrrrrrrrrrrrrrrrrrrrrrr"] },
+        { "x": 33, "y": 38, "rows": ["rrrrrrrrrrrrrrrrrrrrrrrrrr"] },
+        { "x": 33, "y": 39, "rows": ["RRRRRRRRRRRRRRRRRRRRRRRR"] },
+        { "x": 33, "y": 40, "rows": ["rrrrrrrrrrrrrrrrrrrrrr"] },
+        { "x": 33, "y": 41, "rows": ["RRRRRRRRRRRRRRRRRRRR"] },
+        { "x": 33, "y": 42, "rows": ["rrrrrrrrrrrrrrrrrr"] },
+        { "x": 33, "y": 43, "rows": ["RRRRRRRRRRRRRRRR"] },
+        { "x": 33, "y": 44, "rows": ["rrrrrrrrrrrrrr"] },
+        { "x": 33, "y": 45, "rows": ["RRRRRRRRRRRR"] }
+      ]
+    },
+    {
+      "name": "left_face",
+      "chunks": [
+        { "x": 5, "y": 26, "rows": ["ll"] },
+        { "x": 7, "y": 27, "rows": ["llll"] },
+        { "x": 9, "y": 28, "rows": ["llllll"] },
+        { "x": 11, "y": 29, "rows": ["llllllll"] },
+        { "x": 13, "y": 30, "rows": ["llllllllll"] },
+        { "x": 15, "y": 31, "rows": ["llllllllllll"] },
+        { "x": 17, "y": 32, "rows": ["llllllllllllll"] },
+        { "x": 19, "y": 33, "rows": ["llllllllllllllll"] },
+        { "x": 21, "y": 34, "rows": ["llllllllllllllllll"] },
+        { "x": 23, "y": 35, "rows": ["llllllllllllllllllll"] },
+        { "x": 25, "y": 36, "rows": ["llllllllllllllllllllll"] },
+        { "x": 27, "y": 37, "rows": ["llllllllllllllllllllllll"] },
+        { "x": 29, "y": 38, "rows": ["llllllllllllllllllllllllll"] },
+        { "x": 7, "y": 39, "rows": ["LLLLLLLLLLLLLLLLLLLLLLLLLL"] },
+        { "x": 9, "y": 40, "rows": ["llllllllllllllllllllllll"] },
+        { "x": 11, "y": 41, "rows": ["LLLLLLLLLLLLLLLLLLLLLL"] },
+        { "x": 13, "y": 42, "rows": ["llllllllllllllllllll"] },
+        { "x": 15, "y": 43, "rows": ["LLLLLLLLLLLLLLLLLL"] },
+        { "x": 17, "y": 44, "rows": ["llllllllllllllll"] },
+        { "x": 19, "y": 45, "rows": ["LLLLLLLLLLLLLL"] }
+      ]
+    },
+    {
+      "name": "cast_shadow",
+      "opacity": 0.8,
+      "chunks": [
+        { "x": 19, "y": 42, "rows": ["ssssssssssssssssssssssssssss"] },
+        { "x": 15, "y": 43, "rows": ["ssssssssssssssssssssssssssssssssssss"] },
+        { "x": 11, "y": 44, "rows": ["ssssssssssssssssssssssssssssssssssssssssssss"] },
+        { "x": 15, "y": 45, "rows": ["ssssssssssssssssssssssssssssssssssss"] },
+        { "x": 21, "y": 46, "rows": ["ssssssssssssssssssssssss"] }
+      ]
+    }
+  ]
+}

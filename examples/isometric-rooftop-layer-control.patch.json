@@ -1,0 +1,71 @@
+{
+  "operations": [
+    {
+      "op": "insert_layer",
+      "after": "vegetation_highlights",
+      "layer": {
+        "name": "sun_warmth_overlay",
+        "opacity": 0.25,
+        "chunks": [
+          {
+            "x": 22,
+            "y": 18,
+            "rows": [
+              "....yyyyyyyyyyyy....",
+              "...yyyyyyyyyyyyyy...",
+              "..yyyyyyyyyyyyyyyy..",
+              ".yyyyyyyyyyyyyyyyyy.",
+              "yyyyyyyyyyyyyyyyyyyy",
+              ".yyyyyyyyyyyyyyyyyy.",
+              "..yyyyyyyyyyyyyyyy..",
+              "...yyyyyyyyyyyyyy...",
+              "....yyyyyyyyyyyy...."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "op": "move_layer",
+      "layer": "sun_warmth_overlay",
+      "before": "highlights"
+    },
+    {
+      "op": "set_layer_opacity",
+      "layer": "sun_warmth_overlay",
+      "opacity": 0.36
+    },
+    {
+      "op": "insert_layer",
+      "after": "roof_texture",
+      "layer": {
+        "name": "construction_grid",
+        "visible": true,
+        "opacity": 0.2,
+        "chunks": [
+          {
+            "x": 16,
+            "y": 24,
+            "rows": [
+              "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+              "................................",
+              "................................",
+              "................................",
+              "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "op": "set_layer_visibility",
+      "layer": "construction_grid",
+      "visible": false
+    },
+    {
+      "op": "rename_layer",
+      "layer": "cast_shadow",
+      "name": "soft_cast_shadow"
+    }
+  ]
+}

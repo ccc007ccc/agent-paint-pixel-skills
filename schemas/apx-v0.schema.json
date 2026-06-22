@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentpaint.local/schemas/apx-v0.schema.json",
+  "title": "AgentPaint APX Project v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["canvas", "palette", "layers"],
+  "properties": {
+    "canvas": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["width", "height"],
+      "properties": {
+        "width": { "type": "integer", "minimum": 1 },
+        "height": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "palette": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1
+      },
+      "additionalProperties": { "$ref": "#/$defs/color" }
+    },
+    "layers": {
+      "description": "Photoshop-style top-to-bottom stack. Item 0 is the visual top/front layer; the last item is the bottom/back layer.",
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/layer" }
+    }
+  },
+  "$defs": {
+    "color": {
+      "type": "string",
+      "anyOf": [
+        { "const": "transparent" },
+        { "pattern": "^#[0-9a-fA-F]{3}$" },
+        { "pattern": "^#[0-9a-fA-F]{6}$" },
+        { "pattern": "^#[0-9a-fA-F]{8}$" },
+        { "pattern": "^rgb\\(\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*\\)$" },
+        { "pattern": "^rgba\\(\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*,\\s*(25[0-5]|2[0-4][0-9]|1?[0-9]?[0-9])\\s*,\\s*((0(\\.\\d+)?)|1(\\.0+)?|([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5]))\\s*\\)$" }
+      ]
+    },
+    "layer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "visible": { "type": "boolean", "default": true },
+        "opacity": { "type": "number", "minimum": 0, "maximum": 1, "default": 1 },
+        "rows": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "chunks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/chunk" }
+        }
+      }
+    },
+    "chunk": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["x", "y", "rows"],
+      "properties": {
+        "x": { "type": "integer", "minimum": 0 },
+        "y": { "type": "integer", "minimum": 0 },
+        "rows": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

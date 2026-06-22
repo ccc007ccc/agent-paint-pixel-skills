@@ -1,0 +1,17 @@
+target/
+
+examples/*.png
+examples/*-patched.apx
+examples/*-reordered.apx
+*.rgba.json
+
+.vite/
+node_modules/
+
+.DS_Store
+Thumbs.db
+
+
+# Added by cargo
+
+/target

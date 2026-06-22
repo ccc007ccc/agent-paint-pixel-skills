@@ -1,0 +1,302 @@
+{
+  "canvas": { "width": 32, "height": 32 },
+  "palette": {
+    ".": "transparent",
+    "K": "#050407",
+    "O": "#100a12",
+    "V": "#1b1320",
+    "B": "#2b2230",
+    "M": "#5b4c5a",
+    "H": "#9c8f9b",
+    "N": "#d6c9b1",
+    "S": "#6b6255",
+    "R": "#54212a",
+    "G": "#88a45a",
+    "F": "#ffd25a",
+    "E": "#f07b35",
+    "P": "#88334f"
+  },
+  "layers": [
+    {
+      "name": "eyes_or_focal_detail",
+      "chunks": [
+        {
+          "x": 14,
+          "y": 4,
+          "rows": [
+            ".F..",
+            "FFF.",
+            "FFE.",
+            ".FE.",
+            "FF..",
+            ".F.."
+          ]
+        },
+        {
+          "x": 15,
+          "y": 10,
+          "rows": [
+            "KK",
+            "KK",
+            "K."
+          ]
+        },
+        {
+          "x": 13,
+          "y": 19,
+          "rows": [
+            ".K..K.",
+            "......",
+            "..KK..",
+            ".K..K."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "effects",
+      "chunks": [
+        {
+          "x": 12,
+          "y": 2,
+          "rows": [
+            "...P....",
+            "..P.P...",
+            ".PE.EP..",
+            "PE...EP.",
+            "PE...EP.",
+            "PE.EEP..",
+            ".PEEP...",
+            "..PEP...",
+            "..PPP...",
+            "...P...."
+          ]
+        },
+        {
+          "x": 9,
+          "y": 1,
+          "rows": [
+            "......G.......",
+            "...P..........",
+            "...........G..",
+            ".G............",
+            "............P.",
+            "..............",
+            "...G......P..."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cold_highlight",
+      "chunks": [
+        {
+          "x": 11,
+          "y": 13,
+          "rows": [
+            "HH......",
+            ".HH.....",
+            ".H......",
+            "H.......",
+            "........",
+            "........",
+            "......H.",
+            ".....HH."
+          ]
+        },
+        {
+          "x": 12,
+          "y": 18,
+          "rows": [
+            ".SNNNNS.",
+            "SNNNNNNS",
+            "SNNNNNNS",
+            "SSNNNNSS",
+            ".SSNNSS.",
+            "..SSSS.."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "texture_scars",
+      "chunks": [
+        {
+          "x": 10,
+          "y": 14,
+          "rows": [
+            "....V.......",
+            "..V.........",
+            ".......V....",
+            "...V.V......",
+            ".........V..",
+            ".V..........",
+            "......V.....",
+            "....V....V..",
+            "..........V.",
+            "...V........"
+          ]
+        },
+        {
+          "x": 12,
+          "y": 21,
+          "rows": [
+            "..S..S..",
+            ".S....S.",
+            "...SS..."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "material_rot",
+      "chunks": [
+        {
+          "x": 10,
+          "y": 15,
+          "rows": [
+            ".....R......",
+            "..R.....R...",
+            "....R.......",
+            "..........R.",
+            ".R..........",
+            "...R....R...",
+            "......R....."
+          ]
+        },
+        {
+          "x": 12,
+          "y": 21,
+          "rows": [
+            "..R..R..",
+            ".R....R.",
+            "...RR..."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "base_mass",
+      "chunks": [
+        {
+          "x": 9,
+          "y": 12,
+          "rows": [
+            "..MMMMBBBB....",
+            ".BMMMMMMBBB...",
+            ".BBMMMMMMBBB..",
+            "BMMMMMMMMBB...",
+            "BMMMMMMBBBB...",
+            "BBMMMMMMBBBB..",
+            "BBBMMMMMMBBB..",
+            "BBBMMMMMMBBBB.",
+            "BBMMMMMMMMBBB.",
+            "BBMMMMMMMMBBB.",
+            "BBBMMMMMMBBBB.",
+            "BBBBMMMMMBBB..",
+            "BBBMMMMMMBBBB.",
+            "BBBMMMMMMBBBB.",
+            "BBBBMMMMBBBB..",
+            ".BBBBBBBBBB...",
+            "..BBBBBBBB...."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "broken_outline",
+      "chunks": [
+        {
+          "x": 11,
+          "y": 2,
+          "rows": [
+            "....O.....",
+            "...OOO....",
+            "..OO.OO...",
+            ".OO...OO..",
+            ".O.....O..",
+            "OO.....OO.",
+            ".OO...OO..",
+            "..OO.OO...",
+            "...OOO....",
+            "...OOO...."
+          ]
+        },
+        {
+          "x": 8,
+          "y": 12,
+          "rows": [
+            "...OOOOOOOOOO...",
+            "..OO........OO..",
+            "..O..........O..",
+            ".OO..........OO.",
+            ".O............O.",
+            ".O............O.",
+            ".O............O.",
+            "OO............O.",
+            "O.............OO",
+            "O.............O.",
+            "O............OO.",
+            "OO...........O..",
+            ".O...........O..",
+            ".O..........OO..",
+            ".OO........OO...",
+            "..OOOOOOOOOO....",
+            "...OOOOOOOO....."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "deep_shadow",
+      "chunks": [
+        {
+          "x": 12,
+          "y": 2,
+          "rows": [
+            "...V....",
+            "..VVV...",
+            ".VVVVV..",
+            "VVVVVVV.",
+            "VVVVVVV.",
+            ".VVVVV..",
+            "..VVV...",
+            "...V...."
+          ]
+        },
+        {
+          "x": 10,
+          "y": 12,
+          "rows": [
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV",
+            "VVVVVVVVVVVV"
+          ]
+        },
+        {
+          "x": 6,
+          "y": 29,
+          "rows": [
+            "..KKKKKKKKKKKKKKKK..",
+            "KKKKKKKKKKKKKKKKKKKK",
+            ".VVVVVVVVVVVVVVVVVV."
+          ]
+        }
+      ]
+    }
+  ]
+}
