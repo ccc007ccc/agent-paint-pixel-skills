@@ -40,7 +40,7 @@ Windows PowerShell：
 
 - 用 `cargo install --path . --locked --force` 安装 `agentpaint`。
 - 把 Skill 安装到通用/Codex 路径：`$HOME/.agents/skills/agent-paint-pixel-skills`。
-- `--update-path` 会尝试提示或写入 Cargo bin 路径，让 `agentpaint` 能从 PATH 调用。
+- `--update-path` 会把 Cargo bin 路径写入 shell 启动文件：zsh 使用 `.zprofile`，macOS bash 使用 `.bash_profile`，其他 bash 使用 `.bashrc`，fish 使用 `config.fish`，未知 shell 回退到 `.profile`。
 
 验证：
 

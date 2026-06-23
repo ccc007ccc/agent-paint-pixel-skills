@@ -1,6 +1,6 @@
 ---
 name: agent-paint-pixel-skills
-description: Generate, edit, validate, render, visually inspect, animate, and export AgentPaint APX/APXA pixel-art source files with style-aware pixel-art guidance. Use when Codex needs to create layered pixel art at the exact requested resolution, create point-upscaled previews for AI visual inspection, create GIF animation from APXA frames, choose a pixel-art style or era, convert a pixel-art idea into APX JSON, repair APX validation errors, render APX to PNG, export layered PSD, export RGBA JSON, or make local pixel edits with rows/chunks instead of raw RGBA arrays.
+description: Generate, edit, validate, render, visually inspect, animate, import, and export AgentPaint APX/APXA pixel-art source files with style-aware pixel-art guidance. Use when Codex needs to create layered pixel art at the exact requested resolution, import raster images or GIFs into APX/APXA, create point-upscaled previews for AI visual inspection, create GIF animation from APXA frames, choose a pixel-art style or era, convert a pixel-art idea into APX JSON, repair APX validation errors, render APX to PNG, export layered PSD, export RGBA JSON, or make local pixel edits with rows/chunks instead of raw RGBA arrays.
 ---
 
 # Agent Paint Pixel Skills
@@ -31,12 +31,30 @@ The goal is to reduce freedom and make the model reason about the whole sprite a
 - Do not split a simple 24x24 or 32x32 sprite into many layers just because APX supports layers. Optional layers such as `shadow`, `outline`, or `highlight` are only useful after the single `paint` layer already reads well, or when PSD/layer control is requested.
 - If the supersampled preview is not immediately readable as the subject, revise the full rows or local rows before adding more layers.
 
+## Raster Import
+
+Use import commands only when the user asks to convert an existing raster image or GIF into AgentPaint source. Do not use import as a shortcut for creating new art or resizing artwork.
+
+```bash
+agentpaint import-image <input.png> --out <output.apx>
+agentpaint import-image <input.png> --out <output.apx> --layer-name paint
+agentpaint import-gif <input.gif> --out <output.apxa>
+agentpaint import-gif <input.gif> --out <output.apxa> --layer-name paint
+```
+
+`import-image` preserves source dimensions and creates one full-canvas `paint` layer. `import-gif` preserves source frame dimensions and frame durations; the first frame becomes the base layer and later frames become `set_rows` operations. Both commands assign single-character palette symbols automatically. Validate after import before rendering or editing:
+
+```bash
+agentpaint validate <output.apx>
+agentpaint validate-animation <output.apxa>
+```
+
 ## Workflow
 
 1. Work in the user's current workspace or the output directory they request.
 2. Do not look for or require the AgentPaint source repository during normal skill use.
 3. Use the installed `agentpaint` CLI from `PATH`. If `agentpaint --help` fails, ask the user to install the CLI instead of falling back to `cargo run`.
-4. Create or edit an `.apx` JSON file for still art or an `.apxa` JSON file for animation rather than writing raw RGBA arrays.
+4. Create or edit an `.apx` JSON file for still art or an `.apxa` JSON file for animation rather than writing raw RGBA arrays. If the task is converting an existing raster image or GIF, use `import-image` or `import-gif` instead.
 5. For `32x32` and smaller single-subject sprites, apply Small Grid Mode before any style-specific layering.
 6. Before drawing, infer or choose a style brief: style family, canvas, projection, palette size, outline policy, shading policy, texture policy, light direction, layers, and animation motion plan when relevant.
 7. Read bundled `references/pixel-art-style-guide.md` when the user asks for a specific style, era, mood, genre, or when making a non-trivial sprite larger than `32x32`.
@@ -107,6 +125,7 @@ agentpaint export-rgba <file.apx> --out <file.rgba.json>
 - Match requested dimensions exactly. If the user asks for `200x200`, the APX must use `"canvas": { "width": 200, "height": 200 }`.
 - Do not draw at a smaller or larger resolution and resize it later.
 - Do not use scaling, upscaling, downscaling, resampling, or image conversion to satisfy the requested dimensions.
+- When the user asks to convert existing raster artwork, `agentpaint import-image` and `agentpaint import-gif` are allowed format conversions; they preserve source dimensions and do not satisfy a new requested size by resizing.
 - Do not write or run helper programs such as Python, JavaScript, shell scripts, or image-generation scripts to draw the APX art unless the user explicitly asks for programmatic generation or format conversion.
 - Author the artwork through APX JSON: palette symbols, rows, chunks, layers, and patch files.
 - For GIF animation, author the animation through APXA JSON: one exact-size base project plus exact-size frame operations. Do not generate a smaller animation and upscale it.
@@ -198,7 +217,7 @@ Before finalizing the APX source:
 - Every frame renders at the exact APXA canvas size.
 - Use `set_rows`, `clear_layer`, `add_chunk`, `set_layer_visibility`, `set_layer_opacity`, and `move_layer` for motion, squash/stretch, blinking, impact, and effects.
 - Use `set_background` or `clear_background` when a frame needs to change how `_` resolves.
-- Keep GIF palettes practical: aim for 256 colors or fewer and avoid relying on subtle alpha.
+- Keep GIF palettes practical: aim for 256 colors or fewer. GIF export cannot preserve partial alpha, so avoid soft transparency when GIF is the final target.
 
 ## Generation Pattern
 

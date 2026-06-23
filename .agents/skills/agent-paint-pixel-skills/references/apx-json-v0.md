@@ -72,6 +72,8 @@ Supported color values:
 - `"rgb(255,0,0)"`
 - `"rgba(0,0,0,0.35)"`
 
+For `rgba()`, alpha accepts `0..1` floats or `0..255` integers. `rgba(...,1)` means fully opaque.
+
 Background placeholder:
 
 - `.` is the normal transparent palette symbol and must remain `"transparent"`.
@@ -200,6 +202,7 @@ Animation rules:
 - Render one frame for inspection with `agentpaint render-frame <file.apxa> --frame 0 --out <file.png>`.
 - For AI visual inspection, use `agentpaint supersample-frame <file.apxa> --frame 0 --out <file-preview.png>` and inspect the preview, not the raw low-resolution frame.
 - Do not scale or resize frames; canvas size is the GIF frame size.
+- GIF export cannot preserve partial alpha. Fully transparent pixels stay transparent, but semi-transparent pixels are quantized.
 
 AI visual inspection:
 

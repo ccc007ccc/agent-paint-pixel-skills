@@ -40,6 +40,7 @@ Default behavior:
 
 - Installs `agentpaint` with `cargo install --path . --locked --force`.
 - Installs the skill to the universal/Codex path: `$HOME/.agents/skills/agent-paint-pixel-skills`.
+- With `--update-path`, adds Cargo's bin directory to a shell startup file. The installer uses `.zprofile` for zsh, `.bash_profile` on macOS bash, `.bashrc` on other bash shells, `config.fish` for fish, and `.profile` as a fallback.
 
 Verify:
 

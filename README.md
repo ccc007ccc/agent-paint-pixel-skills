@@ -26,7 +26,7 @@ The slime above is a transparent `16x16` APXA animation rendered at the exact so
 
 AgentPaint gives coding agents a practical way to create pixel art without writing raw RGBA arrays.
 
-- `agentpaint`: a Rust CLI for validation, rendering, patching, animation, previews, PSD export, and RGBA export.
+- `agentpaint`: a Rust CLI for validation, import, rendering, patching, animation, previews, PSD export, and RGBA export.
 - `APX`: a JSON pixel-art source format with palette symbols, text rows, local chunks, and Photoshop-style top-to-bottom layers.
 - `APXA`: an animation format that reuses APX layers and applies frame-local patch operations before GIF export.
 - `agent-paint-pixel-skills`: a portable `SKILL.md` workflow that tells compatible CLI/IDE agents how to author APX/APXA files and call the installed CLI from `PATH`.
@@ -84,6 +84,7 @@ See [docs/install.md](docs/install.md) or [docs/install.zh-CN.md](docs/install.z
 ```bash
 agentpaint validate <file.apx>
 agentpaint inspect <file.apx>
+agentpaint import-image <file.png> --out <file.apx>
 agentpaint render <file.apx> --out <file.png>
 agentpaint supersample <file.apx> --out <file-preview.png>
 agentpaint patch <file.apx> --patch <patch.json> --out <patched.apx>
@@ -91,15 +92,20 @@ agentpaint export-rgba <file.apx> --out <file.rgba.json>
 agentpaint export-psd <file.apx> --out <file.psd>
 
 agentpaint validate-animation <file.apxa>
+agentpaint import-gif <file.gif> --out <file.apxa>
 agentpaint inspect-animation <file.apxa>
 agentpaint render-frame <file.apxa> --frame 0 --out <frame.png>
 agentpaint supersample-frame <file.apxa> --frame 0 --out <frame-preview.png>
 agentpaint render-gif <file.apxa> --out <file.gif>
 ```
 
+`import-image` converts an existing raster image to a single-layer APX project without resizing. `import-gif` converts an existing GIF to APXA frames, preserving the source frame dimensions and durations. Both commands assign single-character palette symbols automatically.
+
 Layer order matches Photoshop: `layers[0]` is the visual top/front layer, and the last layer is the visual bottom/back layer. PSD export preserves layer names, top-to-bottom order, visibility, opacity, and palette alpha.
 
 For visual inspection, use `supersample` or `supersample-frame` and inspect the point-upscaled preview instead of the raw low-resolution render. Supersampling uses integer nearest-neighbor scaling and never changes the APX/APXA source dimensions.
+
+GIF export uses the GIF format's practical transparency model. Fully transparent pixels stay transparent, but partial alpha such as soft shadows is quantized during GIF encoding; use PNG frames or APX/APXA source when semi-transparent pixels matter.
 
 ## APX Example
 
@@ -191,3 +197,7 @@ cargo run -- validate examples/one-bit-lighthouse-16.apx
 cargo test
 cargo fmt --check
 ```
+
+## License
+
+MIT. See [LICENSE](LICENSE).

@@ -8,6 +8,7 @@
 - [x] Add the reserved `_` transparent/background placeholder and top-level `background` color.
 - [x] Implement `validate` for dimensions, row width, palette symbols, colors, bounds, and opacity.
 - [x] Implement `render` to composite layers and export PNG.
+- [x] Implement `import-image` and `import-gif` for raster-to-APX/APXA format conversion.
 - [x] Implement `supersample` for point-upscaled, AI-readable visual previews.
 - [x] Implement `inspect` and `export-rgba` for agent/script-friendly inspection.
 - [x] Implement `export-psd` for layered APX to PSD export.
@@ -87,6 +88,8 @@ Rules:
 ```txt
 agentpaint validate <input.apx>
 agentpaint inspect <input.apx>
+agentpaint import-image <input.png> --out <output.apx>
+agentpaint import-image <input.png> --out <output.apx> --layer-name paint
 agentpaint render <input.apx> --out <output.png>
 agentpaint supersample <input.apx> --out <preview.png>
 agentpaint supersample <input.apx> --out <preview.png> --target-width 1280 --target-height 720
@@ -96,15 +99,23 @@ agentpaint patch <input.apx> --patch <patch.json> --in-place
 agentpaint export-rgba <input.apx> --out <output.json>
 agentpaint export-psd <input.apx> --out <output.psd>
 agentpaint validate-animation <input.apxa>
+agentpaint import-gif <input.gif> --out <output.apxa>
+agentpaint import-gif <input.gif> --out <output.apxa> --layer-name paint
 agentpaint inspect-animation <input.apxa>
 agentpaint render-frame <input.apxa> --frame <index> --out <output.png>
 agentpaint supersample-frame <input.apxa> --frame <index> --out <preview.png>
 agentpaint render-gif <input.apxa> --out <output.gif>
 ```
 
+`import-image` decodes an existing raster image and writes a valid single-layer APX project at the source dimensions. Fully transparent pixels become `.`, visible unique RGBA colors receive automatically assigned single-character palette symbols, and the layer defaults to `paint` unless `--layer-name` is provided.
+
+`import-gif` decodes an existing GIF into APXA at the source frame dimensions. The first GIF frame becomes the base `paint` layer; later frames become `set_rows` frame operations; frame durations are preserved in `duration_ms`. It does not scale, crop, or resample frames.
+
 `supersample` renders the APX and writes a point-upscaled PNG for AI visual inspection. `supersample-frame` does the same for one APXA frame. Both commands use integer nearest-neighbor scaling only. With no `--scale`, they choose the largest integer scale that fits within `--target-width` x `--target-height`, defaulting to `1280x720`.
 
 `export-psd` writes an 8-bit RGB PSD with transparency, a flattened preview, and one PSD layer for each APX layer. APX layer names are preserved in the PSD, including Unicode names, and layer order remains Photoshop-style top-to-bottom. Palette alpha maps to the PSD layer transparency channel, APX `layer.opacity` maps to PSD layer opacity, and `visible: false` maps to a hidden PSD layer.
+
+`render-gif` preserves source frame dimensions and timing, but GIF encoding cannot preserve partial alpha. Fully transparent pixels stay transparent; semi-transparent pixels such as soft shadows are quantized by the encoder.
 
 ## APXA Animation v0
 
@@ -150,6 +161,7 @@ Animation rules:
 
 - Every rendered frame uses the exact APXA canvas dimensions.
 - GIF export must not scale, resize, crop, or resample frames.
+- GIF export cannot preserve partial alpha; avoid soft transparency when GIF is the final target.
 - Layer order remains top-to-bottom: `layers[0]` is the visual top/front layer.
 - Use frame operations for motion, squash/stretch, blinking, effects, and layer visibility changes.
 - Keep the palette GIF-friendly; 256 colors or fewer is the practical target.

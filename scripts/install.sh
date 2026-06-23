@@ -73,12 +73,30 @@ if [ "$SKIP_SKILL" -eq 0 ]; then
 fi
 
 if [ "$UPDATE_PATH" -eq 1 ]; then
+  SHELL_NAME=$(basename "${SHELL:-sh}")
   PROFILE_FILE="$HOME/.profile"
   PATH_LINE='export PATH="$HOME/.cargo/bin:$PATH"'
+  case "$SHELL_NAME" in
+    zsh)
+      PROFILE_FILE="$HOME/.zprofile"
+      ;;
+    bash)
+      if [ "$(uname -s 2>/dev/null || echo unknown)" = "Darwin" ]; then
+        PROFILE_FILE="$HOME/.bash_profile"
+      else
+        PROFILE_FILE="$HOME/.bashrc"
+      fi
+      ;;
+    fish)
+      PROFILE_FILE="$HOME/.config/fish/config.fish"
+      PATH_LINE='fish_add_path "$HOME/.cargo/bin"'
+      ;;
+  esac
   if [ ! -f "$PROFILE_FILE" ] || ! grep -Fq "$PATH_LINE" "$PROFILE_FILE"; then
     if [ "$DRY_RUN" -eq 1 ]; then
       echo "[dry-run] Add Cargo bin to $PROFILE_FILE"
     else
+      mkdir -p "$(dirname "$PROFILE_FILE")"
       printf '\n%s\n' "$PATH_LINE" >> "$PROFILE_FILE"
       echo "Added Cargo bin to $PROFILE_FILE. Open a new shell to use it."
     fi

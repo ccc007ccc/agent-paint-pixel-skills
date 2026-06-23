@@ -154,6 +154,7 @@ cursor, windsurf, trae, junie
 ```bash
 agentpaint validate art.apx
 agentpaint inspect art.apx
+agentpaint import-image art.png --out art.apx
 agentpaint render art.apx --out art.png
 agentpaint supersample art.apx --out art-preview.png
 agentpaint export-psd art.apx --out art.psd
@@ -163,11 +164,16 @@ agentpaint export-psd art.apx --out art.psd
 
 ```bash
 agentpaint validate-animation jump.apxa
+agentpaint import-gif jump.gif --out jump.apxa
 agentpaint inspect-animation jump.apxa
 agentpaint render-frame jump.apxa --frame 0 --out frame0.png
 agentpaint supersample-frame jump.apxa --frame 0 --out frame0-preview.png
 agentpaint render-gif jump.apxa --out jump.gif
 ```
+
+`import-image` 和 `import-gif` 用于把已有位图素材转换成 APX/APXA。转换会保留源尺寸，不做缩放；GIF 导入会保留帧时长。
+
+注意：GIF 导出无法保留柔和半透明。完全透明像素会保持透明，但半透明阴影等 alpha 会在 GIF 编码时被量化。
 
 局部修改：
 

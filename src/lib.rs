@@ -3,6 +3,9 @@ use std::collections::{BTreeMap, BTreeSet};
 use anyhow::{Result, anyhow};
 use serde::{Deserialize, Serialize};
 
+const MAX_CANVAS_PIXELS: u64 = 16_777_216;
+const MAX_PSD_DIMENSION: u32 = 30_000;
+
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct Project {
     pub canvas: Canvas,
@@ -151,6 +154,12 @@ pub struct RenderedAnimationFrame {
     pub pixels: Vec<[u8; 4]>,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RgbaAnimationFrame {
+    pub duration_ms: u32,
+    pub pixels: Vec<[u8; 4]>,
+}
+
 #[derive(Debug, Serialize)]
 pub struct InspectSummary {
     pub width: u32,
@@ -200,6 +209,14 @@ pub fn validation_errors(project: &Project) -> Vec<String> {
     if project.canvas.height == 0 {
         errors.push("canvas.height must be greater than 0".to_string());
     }
+    if project.canvas.width > 0 && project.canvas.height > 0 {
+        let pixel_count = u64::from(project.canvas.width) * u64::from(project.canvas.height);
+        if pixel_count > MAX_CANVAS_PIXELS {
+            errors.push(format!(
+                "canvas pixel count must be at most {MAX_CANVAS_PIXELS}, got {pixel_count}"
+            ));
+        }
+    }
     if project.layers.is_empty() {
         errors.push("layers must contain at least one layer".to_string());
     }
@@ -235,12 +252,12 @@ pub fn validation_errors(project: &Project) -> Vec<String> {
         None => errors.push("palette must define `.` as transparent".to_string()),
     }
 
-    if let Some(background) = &project.background {
-        if let Err(error) = parse_color(background) {
-            errors.push(format!(
-                "background has invalid color `{background}`: {error}"
-            ));
-        }
+    if let Some(background) = &project.background
+        && let Err(error) = parse_color(background)
+    {
+        errors.push(format!(
+            "background has invalid color `{background}`: {error}"
+        ));
     }
 
     for (layer_index, layer) in project.layers.iter().enumerate() {
@@ -277,7 +294,7 @@ pub fn render_project(project: &Project) -> Result<Vec<[u8; 4]>> {
     }
 
     let palette = parsed_palette(project)?;
-    let pixel_count = (project.canvas.width as usize) * (project.canvas.height as usize);
+    let pixel_count = checked_pixel_count(project)?;
     let mut output = vec![[0, 0, 0, 0]; pixel_count];
 
     for layer in project.layers.iter().rev() {
@@ -295,6 +312,105 @@ pub fn render_project(project: &Project) -> Result<Vec<[u8; 4]>> {
     }
 
     Ok(output)
+}
+
+pub fn project_from_rgba_pixels(
+    width: u32,
+    height: u32,
+    pixels: &[[u8; 4]],
+    layer_name: &str,
+) -> Result<Project> {
+    ensure_import_dimensions(width, height, pixels.len())?;
+    ensure_layer_name_is_valid(layer_name)?;
+
+    let import_palette = import_palette_from_pixels(pixels.iter())?;
+    let rows = import_rows(width, height, pixels, &import_palette.color_symbols)?;
+    let project = Project {
+        canvas: Canvas { width, height },
+        palette: import_palette.palette,
+        background: None,
+        layers: vec![Layer {
+            name: layer_name.to_string(),
+            visible: true,
+            opacity: 1.0,
+            rows: Some(rows),
+            chunks: Vec::new(),
+        }],
+    };
+
+    ensure_imported_project_valid(project)
+}
+
+pub fn animation_from_rgba_frames(
+    width: u32,
+    height: u32,
+    frames: &[RgbaAnimationFrame],
+    layer_name: &str,
+) -> Result<Animation> {
+    if frames.is_empty() {
+        return Err(anyhow!("animation import requires at least one frame"));
+    }
+    ensure_layer_name_is_valid(layer_name)?;
+
+    for (index, frame) in frames.iter().enumerate() {
+        ensure_import_dimensions(width, height, frame.pixels.len())
+            .map_err(|error| anyhow!("frame {index}: {error}"))?;
+        if frame.duration_ms == 0 {
+            return Err(anyhow!("frame {index} duration_ms must be greater than 0"));
+        }
+    }
+
+    let import_palette =
+        import_palette_from_pixels(frames.iter().flat_map(|frame| frame.pixels.iter()))?;
+    let base_rows = import_rows(
+        width,
+        height,
+        &frames[0].pixels,
+        &import_palette.color_symbols,
+    )?;
+    let animation_frames = frames
+        .iter()
+        .enumerate()
+        .map(|(index, frame)| {
+            let operations = if index == 0 {
+                Vec::new()
+            } else {
+                vec![PatchOperation::SetRows {
+                    layer: layer_name.to_string(),
+                    rows: import_rows(width, height, &frame.pixels, &import_palette.color_symbols)?,
+                }]
+            };
+            Ok(AnimationFrame {
+                name: Some(format!("frame_{index}")),
+                duration_ms: frame.duration_ms,
+                operations,
+            })
+        })
+        .collect::<Result<Vec<_>>>()?;
+
+    let animation = Animation {
+        canvas: Canvas { width, height },
+        palette: import_palette.palette,
+        background: None,
+        layers: vec![Layer {
+            name: layer_name.to_string(),
+            visible: true,
+            opacity: 1.0,
+            rows: Some(base_rows),
+            chunks: Vec::new(),
+        }],
+        frames: animation_frames,
+    };
+
+    let errors = animation_validation_errors(&animation);
+    if !errors.is_empty() {
+        return Err(anyhow!(
+            "imported APXA validation failed:\n{}",
+            errors.join("\n")
+        ));
+    }
+
+    Ok(animation)
 }
 
 pub fn psd_bytes(project: &Project) -> Result<Vec<u8>> {
@@ -596,6 +712,130 @@ pub fn render_animation_frames(animation: &Animation) -> Result<Vec<RenderedAnim
         .collect()
 }
 
+struct ImportPalette {
+    palette: BTreeMap<String, String>,
+    color_symbols: BTreeMap<[u8; 4], char>,
+}
+
+fn import_palette_from_pixels<'a, I>(pixels: I) -> Result<ImportPalette>
+where
+    I: IntoIterator<Item = &'a [u8; 4]>,
+{
+    let colors: BTreeSet<[u8; 4]> = pixels
+        .into_iter()
+        .copied()
+        .filter(|color| color[3] != 0)
+        .collect();
+
+    let mut palette = BTreeMap::new();
+    palette.insert(".".to_string(), "transparent".to_string());
+
+    let mut color_symbols = BTreeMap::new();
+    for (index, color) in colors.into_iter().enumerate() {
+        let symbol = import_palette_symbol(index).ok_or_else(|| {
+            anyhow!(
+                "image contains too many unique visible colors for single-character APX symbols"
+            )
+        })?;
+        palette.insert(symbol.to_string(), color_to_apx_value(color));
+        color_symbols.insert(color, symbol);
+    }
+
+    Ok(ImportPalette {
+        palette,
+        color_symbols,
+    })
+}
+
+fn import_rows(
+    width: u32,
+    height: u32,
+    pixels: &[[u8; 4]],
+    color_symbols: &BTreeMap<[u8; 4], char>,
+) -> Result<Vec<String>> {
+    ensure_import_dimensions(width, height, pixels.len())?;
+
+    let mut rows = Vec::with_capacity(height as usize);
+    for y in 0..height {
+        let mut row = String::new();
+        for x in 0..width {
+            let color = pixels[(y * width + x) as usize];
+            if color[3] == 0 {
+                row.push('.');
+            } else {
+                let symbol = color_symbols
+                    .get(&color)
+                    .ok_or_else(|| anyhow!("missing APX palette symbol for imported color"))?;
+                row.push(*symbol);
+            }
+        }
+        rows.push(row);
+    }
+
+    Ok(rows)
+}
+
+fn ensure_import_dimensions(width: u32, height: u32, pixel_len: usize) -> Result<()> {
+    if width == 0 || height == 0 {
+        return Err(anyhow!("image dimensions must be greater than 0"));
+    }
+    let expected = (width as usize)
+        .checked_mul(height as usize)
+        .ok_or_else(|| anyhow!("image pixel count overflows usize"))?;
+    if pixel_len != expected {
+        return Err(anyhow!(
+            "pixel count mismatch: expected {expected}, got {pixel_len}"
+        ));
+    }
+    Ok(())
+}
+
+fn ensure_imported_project_valid(project: Project) -> Result<Project> {
+    let errors = validation_errors(&project);
+    if !errors.is_empty() {
+        return Err(anyhow!(
+            "imported APX validation failed:\n{}",
+            errors.join("\n")
+        ));
+    }
+    Ok(project)
+}
+
+fn color_to_apx_value(color: [u8; 4]) -> String {
+    if color[3] == 255 {
+        format!("#{:02x}{:02x}{:02x}", color[0], color[1], color[2])
+    } else {
+        format!(
+            "#{:02x}{:02x}{:02x}{:02x}",
+            color[0], color[1], color[2], color[3]
+        )
+    }
+}
+
+fn import_palette_symbol(index: usize) -> Option<char> {
+    const ASCII_SYMBOLS: &str =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!#$%&()*+,-/:;<=>?@[]^`{|}~";
+
+    if let Some(symbol) = ASCII_SYMBOLS.chars().nth(index) {
+        return Some(symbol);
+    }
+
+    let mut remaining = index - ASCII_SYMBOLS.chars().count();
+    for (start, end) in [
+        (0xE000_u32, 0xF8FF_u32),
+        (0xF0000_u32, 0xFFFFD_u32),
+        (0x100000_u32, 0x10FFFD_u32),
+    ] {
+        let count = (end - start + 1) as usize;
+        if remaining < count {
+            return char::from_u32(start + remaining as u32);
+        }
+        remaining -= count;
+    }
+
+    None
+}
+
 pub fn chunk_dimensions(chunk: &Chunk) -> Option<(usize, usize)> {
     let width = infer_chunk_width(&chunk.rows)?;
     Some((width, chunk.rows.len()))
@@ -842,14 +1082,16 @@ fn render_layer_pixels(
     let mut pixels = vec![[0, 0, 0, 0]; pixel_count];
     if let Some(rows) = &layer.rows {
         paint_rows(
-            &mut pixels,
-            project.canvas.width,
-            project.canvas.width as usize,
-            0,
-            0,
             rows,
-            1.0,
-            palette,
+            PaintRowsContext {
+                output: &mut pixels,
+                canvas_width: project.canvas.width,
+                paint_width: project.canvas.width as usize,
+                offset_x: 0,
+                offset_y: 0,
+                opacity: 1.0,
+                palette,
+            },
         );
     }
 
@@ -858,14 +1100,16 @@ fn render_layer_pixels(
             continue;
         };
         paint_rows(
-            &mut pixels,
-            project.canvas.width,
-            chunk_width,
-            chunk.x,
-            chunk.y,
             &chunk.rows,
-            1.0,
-            palette,
+            PaintRowsContext {
+                output: &mut pixels,
+                canvas_width: project.canvas.width,
+                paint_width: chunk_width,
+                offset_x: chunk.x,
+                offset_y: chunk.y,
+                opacity: 1.0,
+                palette,
+            },
         );
     }
 
@@ -873,9 +1117,9 @@ fn render_layer_pixels(
 }
 
 fn validate_psd_limits(project: &Project) -> Result<()> {
-    if project.canvas.width > 30_000 || project.canvas.height > 30_000 {
+    if project.canvas.width > MAX_PSD_DIMENSION || project.canvas.height > MAX_PSD_DIMENSION {
         return Err(anyhow!(
-            "PSD export supports canvas dimensions up to 30000x30000"
+            "PSD export supports canvas dimensions up to {MAX_PSD_DIMENSION}x{MAX_PSD_DIMENSION}"
         ));
     }
     if project.layers.len() > i16::MAX as usize {
@@ -886,9 +1130,15 @@ fn validate_psd_limits(project: &Project) -> Result<()> {
 }
 
 fn checked_pixel_count(project: &Project) -> Result<usize> {
-    (project.canvas.width as usize)
-        .checked_mul(project.canvas.height as usize)
-        .ok_or_else(|| anyhow!("canvas pixel count overflows usize"))
+    let pixel_count = u64::from(project.canvas.width)
+        .checked_mul(u64::from(project.canvas.height))
+        .ok_or_else(|| anyhow!("canvas pixel count overflows u64"))?;
+    if pixel_count > MAX_CANVAS_PIXELS {
+        return Err(anyhow!(
+            "canvas pixel count must be at most {MAX_CANVAS_PIXELS}, got {pixel_count}"
+        ));
+    }
+    usize::try_from(pixel_count).map_err(|_| anyhow!("canvas pixel count overflows usize"))
 }
 
 fn write_psd_header(bytes: &mut Vec<u8>, width: u32, height: u32) {
@@ -987,7 +1237,7 @@ fn write_pascal_layer_name(bytes: &mut Vec<u8>, name: &str) {
 
     bytes.push(name_bytes.len() as u8);
     bytes.extend_from_slice(&name_bytes);
-    while bytes.len() % 4 != 0 {
+    while !bytes.len().is_multiple_of(4) {
         bytes.push(0);
     }
 }
@@ -1046,33 +1296,38 @@ fn write_i32(bytes: &mut Vec<u8>, value: i32) {
     bytes.extend_from_slice(&value.to_be_bytes());
 }
 
-fn paint_rows(
-    output: &mut [[u8; 4]],
+struct PaintRowsContext<'a> {
+    output: &'a mut [[u8; 4]],
     canvas_width: u32,
     paint_width: usize,
     offset_x: u32,
     offset_y: u32,
-    rows: &[String],
     opacity: f32,
-    palette: &BTreeMap<char, [u8; 4]>,
-) {
+    palette: &'a BTreeMap<char, [u8; 4]>,
+}
+
+fn paint_rows(rows: &[String], context: PaintRowsContext<'_>) {
     for (row_index, row) in rows.iter().enumerate() {
         let symbols: Box<dyn Iterator<Item = char> + '_> = if row == "_" {
-            Box::new(std::iter::repeat('_').take(paint_width))
+            Box::new(std::iter::repeat_n('_', context.paint_width))
         } else {
             Box::new(row.chars())
         };
 
         for (column_index, symbol) in symbols.enumerate() {
-            let source = palette[&symbol];
+            let Some(source) = context.palette.get(&symbol) else {
+                continue;
+            };
             if source[3] == 0 {
                 continue;
             }
 
-            let x = offset_x + column_index as u32;
-            let y = offset_y + row_index as u32;
-            let index = (y * canvas_width + x) as usize;
-            output[index] = alpha_over(output[index], source, opacity);
+            let x = context.offset_x as usize + column_index;
+            let y = context.offset_y as usize + row_index;
+            let index = y * context.canvas_width as usize + x;
+            if let Some(destination) = context.output.get_mut(index) {
+                *destination = alpha_over(*destination, *source, context.opacity);
+            }
         }
     }
 }
@@ -1206,10 +1461,12 @@ fn parse_u8_channel(value: &str) -> Result<u8> {
 
 fn parse_alpha_channel(value: &str) -> Result<u8> {
     if let Ok(integer) = value.parse::<u16>() {
-        if integer > 255 {
-            return Err(anyhow!("alpha `{value}` must be between 0 and 255"));
-        }
-        return Ok(integer as u8);
+        return match integer {
+            0 => Ok(0),
+            1 => Ok(255),
+            2..=255 => Ok(integer as u8),
+            _ => Err(anyhow!("alpha `{value}` must be between 0 and 255")),
+        };
     }
 
     let alpha: f32 = value
@@ -1315,6 +1572,22 @@ mod tests {
         assert_eq!(parse_color("#01020304").unwrap(), [1, 2, 3, 4]);
         assert_eq!(parse_color("rgb(1,2,3)").unwrap(), [1, 2, 3, 255]);
         assert_eq!(parse_color("rgba(1,2,3,0.5)").unwrap(), [1, 2, 3, 128]);
+        assert_eq!(parse_color("rgba(1,2,3,1)").unwrap(), [1, 2, 3, 255]);
+        assert_eq!(parse_color("rgba(1,2,3,255)").unwrap(), [1, 2, 3, 255]);
+    }
+
+    #[test]
+    fn rejects_canvas_pixel_count_above_render_limit() {
+        let mut project = sample_project();
+        project.canvas.width = 4097;
+        project.canvas.height = 4097;
+
+        let errors = validation_errors(&project);
+        assert!(
+            errors
+                .iter()
+                .any(|error| error.contains("canvas pixel count must be at most"))
+        );
     }
 
     #[test]
