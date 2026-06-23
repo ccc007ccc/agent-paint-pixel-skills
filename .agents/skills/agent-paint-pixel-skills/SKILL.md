@@ -1,9 +1,13 @@
 ---
 name: agent-paint-pixel-skills
-description: Generate, edit, validate, render, visually inspect, animate, import, and export AgentPaint APX/APXA pixel-art source files with style-aware pixel-art guidance. Use when Codex needs to create layered pixel art at the exact requested resolution, import raster images or GIFs into APX/APXA, create point-upscaled previews for AI visual inspection, create GIF animation from APXA frames, choose a pixel-art style or era, convert a pixel-art idea into APX JSON, repair APX validation errors, render APX to PNG, export layered PSD, export RGBA JSON, or make local pixel edits with rows/chunks instead of raw RGBA arrays.
+description: Generate, edit, validate, render, visually inspect, animate, import, and export AgentPaint APX/APXA pixel-art source files with style-aware pixel-art guidance. Use when an agent needs to create layered pixel art at the exact requested resolution, import low-color raster pixel art or GIFs into APX/APXA, create point-upscaled previews for AI visual inspection, create GIF animation from APXA frames, choose a pixel-art style or era, convert a pixel-art idea into APX JSON, repair APX validation errors, render APX to PNG, export layered PSD, export RGBA JSON, or make local pixel edits with rows/chunks instead of raw RGBA arrays.
 ---
 
 # Agent Paint Pixel Skills
+
+## Scope Boundaries
+
+Use this skill for APX/APXA pixel-art source authoring, editing, validation, rendering, animation, and format conversion. Do not use the APX workflow for ordinary photo editing, vector/SVG work, general bitmap retouching, or non-pixel-art assets unless the user explicitly asks for AgentPaint, APX/APXA, or pixel-art conversion.
 
 ## Visual Inspection Gate
 
@@ -15,6 +19,8 @@ agentpaint supersample-frame <file.apxa> --frame <index> --out <frame-preview.pn
 ```
 
 Do not visually inspect the raw low-resolution render. The supersampled preview is only for AI inspection and must use integer nearest-neighbor scaling; it does not satisfy or change the requested artwork dimensions.
+
+If the environment has no image-viewing capability, still create the supersampled preview when useful, validate/inspect the source structurally, and state that visual inspection was unavailable instead of pretending to have seen the image.
 
 ## Small Grid Mode
 
@@ -42,7 +48,9 @@ agentpaint import-gif <input.gif> --out <output.apxa>
 agentpaint import-gif <input.gif> --out <output.apxa> --layer-name paint
 ```
 
-`import-image` preserves source dimensions and creates one full-canvas `paint` layer. `import-gif` preserves source frame dimensions and frame durations; the first frame becomes the base layer and later frames become `set_rows` operations. Both commands assign single-character palette symbols automatically. Validate after import before rendering or editing:
+`import-image` preserves source dimensions and creates one full-canvas `paint` layer. `import-gif` preserves source frame dimensions and frame durations; the first frame becomes the base layer and later frames become `set_rows` operations. Both commands assign single-character palette symbols automatically.
+
+Import is best for existing low-color pixel art. High-color photos or antialiased images can produce huge palettes and row strings that are valid APX/APXA but hard to edit by hand; warn the user when that tradeoff matters. Validate after import before rendering or editing:
 
 ```bash
 agentpaint validate <output.apx>

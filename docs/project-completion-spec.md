@@ -2,7 +2,7 @@
 
 ## Current State
 
-AgentPaint has a working v0.2 CLI foundation:
+AgentPaint has a working CLI foundation:
 
 - Rust CLI crate named `agentpaint`.
 - APX JSON source format with canvas, palette, layers, full rows, and chunks.
@@ -14,7 +14,7 @@ AgentPaint has a working v0.2 CLI foundation:
 - Installable cross-platform Agent Skill for APX/APXA pixel-art generation, inspection, export, and patch iteration.
 - Install documentation and install scripts.
 
-## v0.2 Completion Checklist
+## Completion Checklist
 
 - [x] Add machine-readable JSON Schema for APX project files.
 - [x] Add machine-readable JSON Schema for APX patch files.
@@ -24,14 +24,14 @@ AgentPaint has a working v0.2 CLI foundation:
 - [x] Regenerate examples with varied styles, aspect ratios, resolutions, and layer-control patches.
 - [x] Add install scripts for Windows PowerShell and POSIX shells.
 - [x] Add a concise README with usage, format, and install entry points.
-- [x] Update the Codex Skill to use the installed `agentpaint` command, the new `patch` command, and bundled schema files.
+- [x] Update the Agent Skill to use the installed `agentpaint` command, the new `patch` command, and bundled schema files.
 - [x] Add cross-platform skill install targets plus Codex/Claude plugin metadata.
 - [x] Add APXA animation validation, frame rendering, supersampled frame previews, and GIF export.
 - [x] Add PSD export with layer names, visibility, opacity, and palette alpha mapping.
 - [x] Add Chinese documentation and README showcase assets.
 - [x] Run `cargo fmt`, `cargo test`, schema-adjacent CLI checks, and skill validation.
 
-## v0.2 Patch Format
+## Patch Format
 
 Patch files are JSON documents:
 
@@ -77,7 +77,7 @@ Initial operations:
 - `move_layer`
 - `clear_layer`
 
-## v0.3+ Backlog
+## Backlog
 
 - MCP server exposing validate/render/patch tools.
 - Web UI for preview, layer visibility, zoom, and manual pixel edits.

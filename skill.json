@@ -1,7 +1,7 @@
 {
   "name": "agent-paint-pixel-skills",
   "displayName": "Agent Paint Pixel Skills",
-  "description": "Generate, edit, validate, render, animate, inspect, export PSD, and export RGBA for exact-size AgentPaint APX/APXA pixel art.",
+  "description": "Generate, edit, import, validate, render, animate, inspect, export PSD, and export RGBA for exact-size AgentPaint APX/APXA pixel art.",
   "version": "0.1.0",
   "author": "ccc007ccc",
   "repository": "https://github.com/ccc007ccc/agent-paint-pixel-skills",

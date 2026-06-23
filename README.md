@@ -198,6 +198,13 @@ cargo test
 cargo fmt --check
 ```
 
+The repo-level skill source is `.agents/skills/agent-paint-pixel-skills`; the distributable mirror is `skills/agent-paint-pixel-skills`. Keep them synchronized with:
+
+```bash
+sh ./scripts/sync-skill-mirror.sh --check
+sh ./scripts/sync-skill-mirror.sh
+```
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

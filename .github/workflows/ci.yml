@@ -20,6 +20,17 @@ jobs:
       - name: Check formatting
         run: cargo fmt --check
 
+      - name: Check skill mirror
+        run: sh ./scripts/sync-skill-mirror.sh --check
+
+      - name: Check style references
+        run: |
+          set -eu
+          root=".agents/skills/agent-paint-pixel-skills/references"
+          grep -ho 'styles/[^`]*\.md' "$root/pixel-art-style-guide.md" | sort -u | while read -r ref; do
+            test -f "$root/$ref"
+          done
+
       - name: Clippy
         run: cargo clippy --all-targets -- -D warnings
 
